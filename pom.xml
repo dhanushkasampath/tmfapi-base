@@ -4,6 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<modules>
 		<module>tmfapi-datamodel</module>
+		<module>tmfapi-productordering</module>
+		<module>common-config</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
