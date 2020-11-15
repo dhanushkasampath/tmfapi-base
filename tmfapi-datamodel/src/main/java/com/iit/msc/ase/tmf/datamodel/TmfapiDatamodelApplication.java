@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmfapidatamodel;
+package com.iit.msc.ase.tmf.datamodel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

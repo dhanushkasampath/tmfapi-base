@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmfapidatamodel;
+package com.iit.msc.ase.tmf.datamodel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
