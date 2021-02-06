@@ -53,7 +53,6 @@ public class ProductOrderController extends BaseController {
     })
     @PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createProductOrder(@Valid @RequestBody(required=true) ProductOrder productOrder, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("Create product order");
         return ResponseEntity.status(HttpStatus.OK).body(createProductOrderService.createProductOrder(productOrder));
     }
@@ -70,7 +69,6 @@ public class ProductOrderController extends BaseController {
     })
     @PatchMapping(value = "/{id}", consumes = "APPLICATION/MERGE-PATCH+JSON", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateProductOrderById(@PathVariable("id") String id, @RequestBody ProductOrder productOrder, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("update product order by id");
         return ResponseEntity.status(HttpStatus.OK).body(updateProductOrderService.updateProductOrderById(id, productOrder));
     }
@@ -88,7 +86,6 @@ public class ProductOrderController extends BaseController {
     })
     @DeleteMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteProductOrderById(@PathVariable("id") String id,HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("delete product order by id");
         deleteProductOrderService.deleteProductOrderById(id);
         return ResponseEntity.status(204).body("");
@@ -107,7 +104,6 @@ public class ProductOrderController extends BaseController {
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllProductOrders(@ApiParam(hidden = false) @RequestParam(required = false) Map<String, String> filters, @RequestParam(required = false) String fields, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("get all product orders");
         return ResponseEntity.status(HttpStatus.OK).body(getProductOrderService.getAllProductOrders(fields, offset, limit, filters));
     }
@@ -124,7 +120,6 @@ public class ProductOrderController extends BaseController {
     })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getProductOrderById(@ApiParam(hidden = false) @RequestParam(required = false) Map<String, String> filters,@PathVariable("id") String id, @RequestParam(required = false) String fields, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("get product order by id");
         return ResponseEntity.status(HttpStatus.OK).body(getProductOrderService.getProductOrderById(id, fields,filters));
     }

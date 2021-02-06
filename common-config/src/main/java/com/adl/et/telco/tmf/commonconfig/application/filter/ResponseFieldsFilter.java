@@ -1,24 +1,19 @@
 package com.adl.et.telco.tmf.commonconfig.application.filter;
 
-import ch.qos.logback.classic.Logger;
-import com.adl.et.telco.dte.plugin.log.annotations.EnableDteLogging;
-import com.adl.et.telco.dte.plugin.log.services.LoggingUtils;
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.context.annotation.DependsOn;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Iterator;
-import java.util.List;
-
-@EnableDteLogging
-@DependsOn({"dteLoggingUtils"})
 @Component
 public class ResponseFieldsFilter {
-    private static Logger logger = LoggingUtils.getLogger(ResponseFieldsFilter.class.getName());
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ResponseFieldsFilter.class.getName());
     public JSONObject jsonConverter(Object object){
         JSONObject response = new JSONObject();
         try {
@@ -27,7 +22,7 @@ public class ResponseFieldsFilter {
             JSONParser parser = new JSONParser();
             response = (JSONObject) parser.parse(json);
         }catch (Exception ex){
-            logger.error("Error in json conversion "+ ExceptionUtils.getStackTrace(ex));
+            logger.error("Error in json conversion:{} ", ExceptionUtils.getStackTrace(ex));
         }
         return response;
 
@@ -44,7 +39,7 @@ public class ResponseFieldsFilter {
                 }
             }
         }catch (Exception ex){
-            logger.error("Error in filtering "+ ExceptionUtils.getStackTrace(ex));
+            logger.error("Error in filtering:{}", ExceptionUtils.getStackTrace(ex));
         }
         return duplicateJSONObject;
     }

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 public class YAMLConfig {
 
-    @Value("${log.identifierKey}")
+//    @Value("${log.identifierKey}")
     private String logIdentifierKey;
 
 }

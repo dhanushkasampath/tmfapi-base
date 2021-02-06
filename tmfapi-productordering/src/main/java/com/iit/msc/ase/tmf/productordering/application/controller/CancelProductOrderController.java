@@ -42,7 +42,6 @@ public class CancelProductOrderController extends BaseController{
     })
     @PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createCancelProductOrder(@Valid @RequestBody(required=true) CancelProductOrder cancelProductOrder, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("Create cancel product order");
         return ResponseEntity.status(HttpStatus.OK).body(createCancelProductOrderService.createCancelProductOrder(cancelProductOrder));
     }
@@ -60,7 +59,6 @@ public class CancelProductOrderController extends BaseController{
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllCancelProductOrders(@ApiParam(hidden = false) @RequestParam(required = false) Map<String, String> filters, @RequestParam(required = false) String fields, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("get all cancel product orders");
         return ResponseEntity.status(HttpStatus.OK).body(getCancelProductOrderService.getAllCancelProductOrders(fields, offset, limit, filters));
     }
@@ -77,7 +75,6 @@ public class CancelProductOrderController extends BaseController{
     })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getCancelProductOrderById(@ApiParam(hidden = false) @RequestParam(required = false) Map<String, String> filters,@PathVariable("id") String id, @RequestParam(required = false) String fields, HttpServletRequest request) throws BaseException {
-        setLogIdentifier(request);
         logger.info("get cancel product order by id");
         return ResponseEntity.status(HttpStatus.OK).body(getCancelProductOrderService.getCancelProductOrderById(id, fields,filters));
     }

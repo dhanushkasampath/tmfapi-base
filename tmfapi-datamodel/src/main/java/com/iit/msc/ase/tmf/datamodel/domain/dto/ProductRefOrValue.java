@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.iit.msc.ase.tmf.datamodel.domain.enums.ProductStatusType;
 import lombok.Getter;
 import lombok.Setter;
 

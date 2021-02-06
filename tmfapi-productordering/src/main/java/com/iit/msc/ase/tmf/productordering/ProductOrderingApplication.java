@@ -9,8 +9,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
-@EnableSwagger2
-@ComponentScan(basePackages = {"com.adl.et.telco.tmf.datamodel","com.adl.et.telco.tmf.commonconfig","com.adl.et.telco.tmf.productordering"})
+//@ComponentScan(basePackages = {"com.adl.et.telco.tmf.datamodel","com.adl.et.telco.tmf.commonconfig","com.adl.et.telco.tmf.productordering"})
 @SpringBootApplication
 public class ProductOrderingApplication {
     private static final Logger logger = Logger.getLogger(ProductOrderingApplication.class.getName());
