@@ -7,8 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude( JsonInclude.Include.NON_EMPTY)
+@JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class TimePeriod {
+
     @JsonIgnore
     private long primaryId;
     @JsonIgnore
@@ -35,4 +36,5 @@ public class TimePeriod {
                 ", endDateTime='" + endDateTime + '\'' +
                 '}';
     }
+
 }

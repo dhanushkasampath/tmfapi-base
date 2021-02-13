@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.datamodel.domain.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,8 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class PaymentRef {
+public class CreditProfile {
 
+    public static final String VALIDFOR_TABLE = "TimePeriod";
     @JsonIgnore
     private long primaryId;
     @JsonIgnore
@@ -21,29 +24,30 @@ public class PaymentRef {
     private String immediateParent;
     @JsonIgnore
     private String immediateParentId;
-
-    @JsonProperty( "@referredType" )
-    private String referredType;
+    @NotNull
+    private String creditProfileDate;
+    private int creditScore;
     @JsonProperty( "@baseType" )
     private String baseType;
+    @NotNull
+    private TimePeriod validFor;
     @JsonProperty( "@type" )
     private String type;
-    private String name;
-    private String id;
-    private String href;
+    private int creditRiskRating;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
+
 
     @Override
     public String toString() {
         return
-                "PaymentMethodItem{" +
-                        "@referredType = '" + referredType + '\'' +
+                "CreditProfileItem{" +
+                        "creditProfileDate = '" + creditProfileDate + '\'' +
+                        ",creditScore = '" + creditScore + '\'' +
                         ",@baseType = '" + baseType + '\'' +
+                        ",validFor = '" + validFor + '\'' +
                         ",@type = '" + type + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",id = '" + id + '\'' +
-                        ",href = '" + href + '\'' +
+                        ",creditRiskRating = '" + creditRiskRating + '\'' +
                         ",@schemaLocation = '" + schemaLocation + '\'' +
                         "}";
     }

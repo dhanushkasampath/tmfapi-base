@@ -10,8 +10,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude( JsonInclude.Include.NON_EMPTY)
+@JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class Characteristic {
+
     @JsonIgnore
     private long primaryId;
     @JsonIgnore
@@ -23,9 +24,9 @@ public class Characteristic {
     @JsonIgnore
     private String immediateParentId;
 
-    @JsonProperty("@baseType")
+    @JsonProperty( "@baseType" )
     private String baseType;
-    @JsonProperty("@type")
+    @JsonProperty( "@type" )
     private String type;
     @NotNull
     private String valueType;
@@ -33,7 +34,7 @@ public class Characteristic {
     private String value;
     @NotNull
     private String name;
-    @JsonProperty("@schemaLocation")
+    @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
     @Override
@@ -47,4 +48,5 @@ public class Characteristic {
                         ",@schemaLocation = '" + schemaLocation + '\'' +
                         "}";
     }
+
 }

@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.datamodel.domain.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class PaymentRef {
+public class EngagedParty {
 
     @JsonIgnore
     private long primaryId;
@@ -21,24 +23,27 @@ public class PaymentRef {
     private String immediateParent;
     @JsonIgnore
     private String immediateParentId;
-
     @JsonProperty( "@referredType" )
     private String referredType;
+    private String role;
     @JsonProperty( "@baseType" )
     private String baseType;
     @JsonProperty( "@type" )
     private String type;
     private String name;
+    @NotNull
     private String id;
     private String href;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
+
     @Override
     public String toString() {
         return
-                "PaymentMethodItem{" +
+                "EngagedParty{" +
                         "@referredType = '" + referredType + '\'' +
+                        ",role = '" + role + '\'' +
                         ",@baseType = '" + baseType + '\'' +
                         ",@type = '" + type + '\'' +
                         ",name = '" + name + '\'' +
