@@ -1,15 +1,3 @@
-/**
- * © Copyrights 2020 Axiata Digital Labs Pvt Ltd.
- * All Rights Reserved.
- * <p>
- * These material are unpublished, proprietary, confidential source
- * code of Axiata Digital Labs Pvt Ltd (ADL) and constitute a TRADE
- * SECRET of ADL.
- * <p>
- * ADL retains all title to and intelectual property rights in these
- * materials.
- */
-
 package com.iit.msc.ase.tmf.customermanagement.application.controller;
 
 import java.util.Map;
@@ -37,13 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <h1>Customer Controller!</h1>
- * <p>
- * <b>Note:</b>
- *
- * @author Sharada Deshan
+ * @author Dhanushka Sampath
  * @version 1.0
- * @since 2020-02-01
+ * @since 2021-02-14
  */
 
 @RestController
