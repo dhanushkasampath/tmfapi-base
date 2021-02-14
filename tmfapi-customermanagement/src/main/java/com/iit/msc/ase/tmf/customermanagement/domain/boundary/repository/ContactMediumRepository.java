@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository;
 
-import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.ContactMedium;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @since 2021.02.14
  */
 @Repository
-public interface CustomerRepository extends MongoRepository < CustomerDto, String > {
+public interface ContactMediumRepository extends MongoRepository < ContactMedium, String > {
 
 
 }

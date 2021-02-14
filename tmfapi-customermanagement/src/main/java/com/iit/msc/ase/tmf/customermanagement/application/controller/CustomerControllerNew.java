@@ -5,7 +5,7 @@ import javax.validation.Valid;
 
 import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
 import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
-import com.iit.msc.ase.tmf.datamodel.domain.dto.Customer;
+import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class CustomerControllerNew extends BaseController {
 
     /**
      * This method is to create a customer entity.
-     * @param customer This is the first parameter
+     * @param customerDto This is the first parameter
      * @param request  This is the second parameter
      * @return ResponseEntity This returns created customer entity
      * @throws BaseException
@@ -39,7 +39,7 @@ public class CustomerControllerNew extends BaseController {
     public ResponseEntity createCustomer(
             @Valid
             @RequestBody( required = true )
-                    Customer customer, HttpServletRequest request) throws BaseException {
+                    CustomerDto customerDto, HttpServletRequest request) throws BaseException {
         setLogIdentifier(request);
         logger.debug("create customer");
         //how

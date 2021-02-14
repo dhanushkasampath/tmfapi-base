@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class TimePeriod {
+public class TimePeriodDto {
 
     @JsonIgnore
     private long primaryId;

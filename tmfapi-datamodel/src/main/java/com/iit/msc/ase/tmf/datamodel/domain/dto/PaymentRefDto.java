@@ -1,7 +1,5 @@
 package com.iit.msc.ase.tmf.datamodel.domain.dto;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,9 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class CreditProfile {
+public class PaymentRefDto {
 
-    public static final String VALIDFOR_TABLE = "TimePeriod";
     @JsonIgnore
     private long primaryId;
     @JsonIgnore
@@ -24,30 +21,29 @@ public class CreditProfile {
     private String immediateParent;
     @JsonIgnore
     private String immediateParentId;
-    @NotNull
-    private String creditProfileDate;
-    private int creditScore;
+
+    @JsonProperty( "@referredType" )
+    private String referredType;
     @JsonProperty( "@baseType" )
     private String baseType;
-    @NotNull
-    private TimePeriod validFor;
     @JsonProperty( "@type" )
     private String type;
-    private int creditRiskRating;
+    private String name;
+    private String id;
+    private String href;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
-
 
     @Override
     public String toString() {
         return
-                "CreditProfileItem{" +
-                        "creditProfileDate = '" + creditProfileDate + '\'' +
-                        ",creditScore = '" + creditScore + '\'' +
+                "PaymentMethodItem{" +
+                        "@referredType = '" + referredType + '\'' +
                         ",@baseType = '" + baseType + '\'' +
-                        ",validFor = '" + validFor + '\'' +
                         ",@type = '" + type + '\'' +
-                        ",creditRiskRating = '" + creditRiskRating + '\'' +
+                        ",name = '" + name + '\'' +
+                        ",id = '" + id + '\'' +
+                        ",href = '" + href + '\'' +
                         ",@schemaLocation = '" + schemaLocation + '\'' +
                         "}";
     }

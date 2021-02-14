@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class MediumCharacteristic {
+public class MediumCharacteristicDto {
 
     @JsonIgnore
     private long primaryId;

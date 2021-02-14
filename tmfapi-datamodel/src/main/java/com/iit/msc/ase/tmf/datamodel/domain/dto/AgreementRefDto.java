@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class Characteristic {
+public class AgreementRefDto {
 
     @JsonIgnore
     private long primaryId;
@@ -24,27 +24,30 @@ public class Characteristic {
     @JsonIgnore
     private String immediateParentId;
 
+    @JsonProperty( "@referredType" )
+    private String referredType;
     @JsonProperty( "@baseType" )
     private String baseType;
     @JsonProperty( "@type" )
     private String type;
-    @NotNull
-    private String valueType;
-    @NotNull
-    private String value;
-    @NotNull
     private String name;
+    @NotNull
+    private String id;
+    private String href;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
+
 
     @Override
     public String toString() {
         return
-                "CharacteristicItem{" +
-                        "@baseType = '" + baseType + '\'' +
+                "AgreementItem{" +
+                        "@referredType = '" + referredType + '\'' +
+                        ",@baseType = '" + baseType + '\'' +
                         ",@type = '" + type + '\'' +
-                        ",valueType = '" + valueType + '\'' +
                         ",name = '" + name + '\'' +
+                        ",id = '" + id + '\'' +
+                        ",href = '" + href + '\'' +
                         ",@schemaLocation = '" + schemaLocation + '\'' +
                         "}";
     }

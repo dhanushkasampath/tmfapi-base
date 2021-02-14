@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class AccountRef {
+public class AccountRefDto {
 
     @JsonIgnore
     private long primaryId;

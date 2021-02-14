@@ -1,6 +1,5 @@
 package com.iit.msc.ase.tmf.datamodel.domain.dto;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,10 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
-public class ContactMedium {
-
-    public static final String CHARACTERISTIC_TABLE = "MediumCharacteristic";
-    public static final String VALIDFOR_TABLE = "TimePeriod";
+public class EngagedPartyDto {
 
     @JsonIgnore
     private long primaryId;
@@ -27,35 +23,34 @@ public class ContactMedium {
     private String immediateParent;
     @JsonIgnore
     private String immediateParentId;
-    @NotNull
-    private String mediumType;
-    private boolean preferred;
-
-
-    private TimePeriod validFor;
-    @Valid
-    @NotNull
-    private MediumCharacteristic characteristic;
-
+    @JsonProperty( "@referredType" )
+    private String referredType;
+    private String role;
     @JsonProperty( "@baseType" )
     private String baseType;
     @JsonProperty( "@type" )
     private String type;
+    private String name;
+    @NotNull
+    private String id;
+    private String href;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
+
     @Override
     public String toString() {
-        return "ContactMedium{" +
-                "primaryId=" + primaryId +
-                ", mediumType='" + mediumType + '\'' +
-                ", preferred=" + preferred +
-                ", validFor=" + validFor +
-                ", characteristic=" + characteristic +
-                ", baseType='" + baseType + '\'' +
-                ", type='" + type + '\'' +
-                ", schemaLocation='" + schemaLocation + '\'' +
-                '}';
+        return
+                "EngagedParty{" +
+                        "@referredType = '" + referredType + '\'' +
+                        ",role = '" + role + '\'' +
+                        ",@baseType = '" + baseType + '\'' +
+                        ",@type = '" + type + '\'' +
+                        ",name = '" + name + '\'' +
+                        ",id = '" + id + '\'' +
+                        ",href = '" + href + '\'' +
+                        ",@schemaLocation = '" + schemaLocation + '\'' +
+                        "}";
     }
 
 }

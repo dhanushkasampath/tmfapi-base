@@ -10,21 +10,21 @@ main entity tables
 child entity tables
 tables with attribute values as primary ids
 
- insert into customer(id,attributes,childentity) values('1111',{'222':'222','2222':'333'},{'child':'222'});
+ insert into customerDto(id,attributes,childentity) values('1111',{'222':'222','2222':'333'},{'child':'222'});
   update startdatetime set superiorparent = superiorparent + {'ccc':'333'} where id = '333ppppp';
   delete from startdatetime where id in('3333') if immediateparent = {};
   delete from startdatetime where id = '333ppppp' IF immediateparent = {};
-update customer SET childentity = childentity + {'11111':'5555'},attributes = attributes +{'111999':'999'} where id = '88888qqqq';
+update customerDto SET childentity = childentity + {'11111':'5555'},attributes = attributes +{'111999':'999'} where id = '88888qqqq';
 select * from price where superiorparent contains 'Test-Object-01' ALLOW FILTERING;//queries with allow filtering not used in logic
 
-CREATE TABLE IF NOT EXISTS customer(id text PRIMARY KEY,childentity map<text,frozen <list<text>>>,attributes map<text,text>);
+CREATE TABLE IF NOT EXISTS customerDto(id text PRIMARY KEY,childentity map<text,frozen <list<text>>>,attributes map<text,text>);
 
 
 create keyspace if not exists tmf_db with replication = {'class':'SimpleStrategy','replication_factor':1};
-CREATE TABLE IF NOT EXISTS customer(id text PRIMARY KEY,childentity map<text,text>,attributes map<text,text>);
+CREATE TABLE IF NOT EXISTS customerDto(id text PRIMARY KEY,childentity map<text,text>,attributes map<text,text>);
 CREATE TABLE CREATE TABLE IF NOT EXISTS accountref(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
              CREATE TABLE IF NOT EXISTS agreementref(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
-             CREATE TABLE IF NOT EXISTS characteristic(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
+             CREATE TABLE IF NOT EXISTS characteristicDto(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
              CREATE TABLE IF NOT EXISTS contactmedium(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
              CREATE TABLE IF NOT EXISTS creditprofile(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
              CREATE TABLE IF NOT EXISTS engagedparty(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
@@ -34,18 +34,18 @@ CREATE TABLE CREATE TABLE IF NOT EXISTS accountref(primaryId text PRIMARY KEY,at
              CREATE TABLE IF NOT EXISTS timeperiod(primaryId text PRIMARY KEY,attributes map<text,text>,immediateparent map<text,text>,superiorparent map<text,text>);
 
 
-CREATE TABLE IF NOT EXISTS customer(id text PRIMARY KEY, statusReason text,href text,type text);
-CREATE TABLE IF NOT EXISTS customer(id text PRIMARY KEY, statusreason text,href text,type text,schemalocation text, name text,basetype text,status text);
+CREATE TABLE IF NOT EXISTS customerDto(id text PRIMARY KEY, statusReason text,href text,type text);
+CREATE TABLE IF NOT EXISTS customerDto(id text PRIMARY KEY, statusreason text,href text,type text,schemalocation text, name text,basetype text,status text);
 
 
 
 CREATE TABLE IF NOT EXISTS mediumCharacteristic(parentEntity text,parentId text,primaryId text PRIMARY KEY,country text,city text,schemaLocation text,contactType text,type text,baseType text,socialNetworkId text,emailAddress text,phoneNumber text,stateOrProvince text,faxNumber text,postCode text,street1 text,street2 text);
-CREATE TABLE IF NOT EXISTS contactMedium(parentEntity text,parentId text,primaryId text PRIMARY KEY,startDateTime text,endDateTime text,schemaLocation text,mediumType text,type text,preferred boolean,baseType text);
-CREATE TABLE IF NOT EXISTS creditProfile(parentEntity text,parentId text,primaryId text PRIMARY KEY,creditProfileDate text,creditScore int,startDateTime text,endDateTime text,schemaLocation text,creditRiskRating int,type text,baseType text);
+CREATE TABLE IF NOT EXISTS contactMediumDto(parentEntity text,parentId text,primaryId text PRIMARY KEY,startDateTime text,endDateTime text,schemaLocation text,mediumType text,type text,preferred boolean,baseType text);
+CREATE TABLE IF NOT EXISTS creditProfileDto(parentEntity text,parentId text,primaryId text PRIMARY KEY,creditProfileDate text,creditScore int,startDateTime text,endDateTime text,schemaLocation text,creditRiskRating int,type text,baseType text);
 CREATE TABLE IF NOT EXISTS agreementRef(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,schemaLocation text,name text,id text,href text,type text,baseType text);
-CREATE TABLE IF NOT EXISTS relatedParty(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,role text,schemaLocation text,name text,id text,href text,type text,baseType text );
-CREATE TABLE IF NOT EXISTS characteristic(parentEntity text,parentId text,primaryId text PRIMARY KEY,schemaLocation text,valueType text,name text,type text,baseType text);
+CREATE TABLE IF NOT EXISTS relatedPartyDto(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,role text,schemaLocation text,name text,id text,href text,type text,baseType text );
+CREATE TABLE IF NOT EXISTS characteristicDto(parentEntity text,parentId text,primaryId text PRIMARY KEY,schemaLocation text,valueType text,name text,type text,baseType text);
 CREATE TABLE IF NOT EXISTS paymentRef(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,schemaLocation text,name text,id text,href text,type text,baseType text);
 CREATE TABLE IF NOT EXISTS account(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,schemaLocation text,name text,description text,id text,href text,type text,baseType text);
-CREATE TABLE IF NOT EXISTS engagedParty(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,role text,schemaLocation text,name text,id text,href text,type text,baseType text);
-CREATE TABLE IF NOT EXISTS customer(startDateTime text,endDateTime text,schemaLocation text,type text,baseType text,statusReason text,name text,id text PRIMARY KEY,href text,status text);
+CREATE TABLE IF NOT EXISTS engagedPartyDto(parentEntity text,parentId text,primaryId text PRIMARY KEY,referredType text,role text,schemaLocation text,name text,id text,href text,type text,baseType text);
+CREATE TABLE IF NOT EXISTS customerDto(startDateTime text,endDateTime text,schemaLocation text,type text,baseType text,statusReason text,name text,id text PRIMARY KEY,href text,status text);
