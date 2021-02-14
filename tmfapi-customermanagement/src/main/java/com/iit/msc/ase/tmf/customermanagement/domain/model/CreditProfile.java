@@ -1,5 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
+import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,4 +15,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "credit_profile")
 public class CreditProfile {
 
+    private long primaryId;
+    private String parentEntity;
+    private String parentId;
+    private String immediateParent;
+    private String immediateParentId;
+    private String creditProfileDate;
+    private int creditScore;
+    private String baseType;
+    private TimePeriodDto validFor;
+    private String type;
+    private int creditRiskRating;
+    private String schemaLocation;
 }

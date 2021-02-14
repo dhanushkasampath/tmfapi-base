@@ -14,4 +14,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "payment_ref")
 public class PaymentRef {
 
+    private long primaryId;
+    private String parentEntity;
+    private String parentId;
+    private String immediateParent;
+    private String immediateParentId;
+    private String referredType;
+    private String baseType;
+    private String type;
+    private String name;
+    private String id;
+    private String href;
+    private String schemaLocation;
 }

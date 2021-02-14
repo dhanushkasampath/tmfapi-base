@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
+import com.iit.msc.ase.tmf.datamodel.domain.dto.MediumCharacteristicDto;
+import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,4 +16,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "contact_medium")
 public class ContactMedium {
 
+    private long primaryId;
+    private String parentEntity;
+    private String parentId;
+    private String immediateParent;
+    private String immediateParentId;
+    private String mediumType;
+    private boolean preferred;
+    private TimePeriodDto validFor;
+    private MediumCharacteristicDto characteristic;
+    private String baseType;
+    private String type;
+    private String schemaLocation;
 }

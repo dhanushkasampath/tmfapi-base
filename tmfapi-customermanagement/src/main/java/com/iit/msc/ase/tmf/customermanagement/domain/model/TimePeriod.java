@@ -14,4 +14,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "time_period")
 public class TimePeriod {
 
+    private long primaryId;
+    private String parentEntity;
+    private String parentId;
+    private String immediateParent;
+    private String immediateParentId;
+    private String startDateTime;
+    private String endDateTime;
 }

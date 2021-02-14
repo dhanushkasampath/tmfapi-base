@@ -14,4 +14,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "characteristic")
 public class Characteristic {
 
+    private long primaryId;
+    private String parentEntity;
+    private String parentId;
+    private String immediateParent;
+    private String immediateParentId;
+    private String baseType;
+    private String type;
+    private String valueType;
+    private String value;
+    private String name;
+    private String schemaLocation;
 }
