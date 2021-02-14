@@ -1,4 +1,4 @@
-package com.adl.et.telco.tmf.commonconfig.application.config;
+package com.iit.msc.ase.tmf.commonconfig.application.config;
 
 import lombok.Getter;
 import lombok.Setter;

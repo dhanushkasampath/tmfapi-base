@@ -1,4 +1,4 @@
-package com.adl.et.telco.tmf.commonconfig.application.exception;
+package com.iit.msc.ase.tmf.commonconfig.application.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

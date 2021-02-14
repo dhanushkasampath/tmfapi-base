@@ -1,4 +1,4 @@
-package com.adl.et.telco.tmf.commonconfig.application.filter;
+package com.iit.msc.ase.tmf.commonconfig.application.filter;
 
 import java.util.Iterator;
 import java.util.List;

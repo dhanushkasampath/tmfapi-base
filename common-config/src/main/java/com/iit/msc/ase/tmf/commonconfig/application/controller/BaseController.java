@@ -1,9 +1,9 @@
-package com.adl.et.telco.tmf.commonconfig.application.controller;
+package com.iit.msc.ase.tmf.commonconfig.application.controller;
 
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
-import com.adl.et.telco.tmf.commonconfig.application.config.YAMLConfig;
+import com.iit.msc.ase.tmf.commonconfig.application.config.YAMLConfig;
 import org.jboss.logging.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

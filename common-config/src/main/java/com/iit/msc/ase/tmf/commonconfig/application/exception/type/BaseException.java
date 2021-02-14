@@ -1,4 +1,4 @@
-package com.adl.et.telco.tmf.commonconfig.application.exception.type;
+package com.iit.msc.ase.tmf.commonconfig.application.exception.type;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

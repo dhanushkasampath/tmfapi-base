@@ -1,7 +1,7 @@
-package com.adl.et.telco.tmf.commonconfig.application.exception;
+package com.iit.msc.ase.tmf.commonconfig.application.exception;
 
 
-import com.adl.et.telco.tmf.commonconfig.application.exception.type.BaseException;
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

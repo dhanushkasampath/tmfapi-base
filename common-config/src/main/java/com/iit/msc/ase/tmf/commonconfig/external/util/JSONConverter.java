@@ -1,4 +1,4 @@
-package com.adl.et.telco.tmf.commonconfig.external.util;
+package com.iit.msc.ase.tmf.commonconfig.external.util;
 
 import java.util.ArrayList;
 import java.util.List;

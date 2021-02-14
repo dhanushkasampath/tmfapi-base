@@ -3,8 +3,8 @@ package com.iit.msc.ase.tmf.customermanagement.application.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.adl.et.telco.tmf.commonconfig.application.controller.BaseController;
-import com.adl.et.telco.tmf.commonconfig.application.exception.type.BaseException;
+import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.Customer;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
