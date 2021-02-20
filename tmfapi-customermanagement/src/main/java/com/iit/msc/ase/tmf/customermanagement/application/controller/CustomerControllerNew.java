@@ -30,8 +30,8 @@ public class CustomerControllerNew extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerControllerNew.class);
 
-//    @Autowired
-//    private TimePeriodService timePeriodService;
+    @Autowired
+    private TimePeriodService timePeriodService;
 
     /**
      * This method is to create a customer entity.
@@ -52,7 +52,7 @@ public class CustomerControllerNew extends BaseController {
 
         TimePeriod timePeriod = modelMapper.map(customerDto.getValidFor(), TimePeriod.class);
         logger.debug("create customer ended");
-//        timePeriodService.create(timePeriod);
+        timePeriodService.create(timePeriod);
         //how
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }

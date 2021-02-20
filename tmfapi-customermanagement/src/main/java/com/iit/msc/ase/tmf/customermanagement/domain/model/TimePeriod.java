@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class TimePeriod {
 
     @Id
-    private String id;//added by me
+    private int id;//added by me
     private long primaryId;
     private String parentEntity;
     private String parentId;
