@@ -2,6 +2,8 @@ package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -11,9 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "medium_characteristic")
 public class MediumCharacteristic {
 
+    @Id
+    private String id;//added by me
     private long primaryId;
     private String parentEntity;
     private String parentId;

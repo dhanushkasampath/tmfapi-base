@@ -2,6 +2,7 @@ package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -11,9 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "characteristic")
 public class Characteristic {
 
+    private String id;//added by me
     private long primaryId;
     private String parentEntity;
     private String parentId;

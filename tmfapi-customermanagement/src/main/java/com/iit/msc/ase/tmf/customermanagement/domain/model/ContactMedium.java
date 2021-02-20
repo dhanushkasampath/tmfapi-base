@@ -4,6 +4,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.MediumCharacteristicDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -13,9 +14,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "contact_medium")
 public class ContactMedium {
 
+    private String id;
     private long primaryId;
     private String parentEntity;
     private String parentId;

@@ -2,6 +2,8 @@ package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -11,9 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "payment_ref")
 public class PaymentRef {
 
+    @Id
+    private String id;
     private long primaryId;
     private String parentEntity;
     private String parentId;
@@ -23,7 +28,6 @@ public class PaymentRef {
     private String baseType;
     private String type;
     private String name;
-    private String id;
     private String href;
     private String schemaLocation;
 }

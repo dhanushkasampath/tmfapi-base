@@ -6,6 +6,8 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,10 +18,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document( collection = "customer" )
 public class Customer {
 
-    private String id;
+    @Id
+    private int id;
     private String href;
     private EngagedPartyDto engagedParty;
     private String status;
