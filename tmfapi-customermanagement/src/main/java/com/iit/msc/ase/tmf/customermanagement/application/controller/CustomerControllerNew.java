@@ -50,7 +50,7 @@ public class CustomerControllerNew extends BaseController {
 //        setLogIdentifier(request);
         logger.debug("create customer");
 
-        TimePeriod timePeriod = modelMapper.map(customerDto.getValidFor(), TimePeriod.class);
+        TimePeriod timePeriod = getModelMapper().map(customerDto.getValidFor(), TimePeriod.class);
         logger.debug("create customer ended");
         timePeriodService.create(timePeriod);
         //how

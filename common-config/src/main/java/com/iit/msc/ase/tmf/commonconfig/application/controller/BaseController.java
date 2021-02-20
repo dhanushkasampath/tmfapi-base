@@ -10,6 +10,7 @@ import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 import org.jboss.logging.MDC;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseController {
@@ -19,7 +20,12 @@ public class BaseController {
     private YAMLConfig yamlConfig;
 
     public ObjectMapper map = new ObjectMapper();
-    public ModelMapper modelMapper = new ModelMapper();
+
+    public ModelMapper getModelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
 
     public String mapObjToString(Object obj) {
         try {
