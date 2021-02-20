@@ -6,6 +6,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -15,24 +16,40 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @AllArgsConstructor
-@Document(collection = "customer")
+@Document( collection = "customer" )
 public class Customer {
 
     private String id;
     private String href;
-    private List < String > contactMediumIdList;
-    private List < String > creditProfileIdList;
-    private List < String > agreementIdList;
+    private EngagedPartyDto engagedParty;
+    private String status;
     private TimePeriodDto validFor;
     private String type;
-    private List < String > relatedPartyIdList;
-    private List < String > characteristicIdList;
     private String statusReason;
     private String baseType;
     private String name;
-    private List < String > paymentMethodIdList;
     private String schemaLocation;
-    private List < String > accountIdList;
-    private EngagedPartyDto engagedParty;
-    private String status;
+
+    @DBRef
+    private List < ContactMedium > contactMediumIdList;
+
+    @DBRef
+    private List < CreditProfile > creditProfileIdList;
+
+    @DBRef
+    private List < AgreementRef > agreementIdList;
+
+    @DBRef
+    private List < RelatedParty > relatedPartyIdList;
+
+    @DBRef
+    private List < Characteristic > characteristicIdList;
+
+    @DBRef
+    private List < PaymentRef > paymentMethodIdList;
+
+    @DBRef
+    private List < AccountRef > accountIdList;
+
+
 }
