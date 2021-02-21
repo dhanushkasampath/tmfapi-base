@@ -23,16 +23,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer {
 
     @Id
-    private int id;
+    private String id;
     private String href;
-    private EngagedPartyDto engagedParty;
     private String status;
-    private TimePeriodDto validFor;
     private String type;
     private String statusReason;
     private String baseType;
     private String name;
     private String schemaLocation;
+
+    @DBRef
+    private EngagedPartyDto engagedParty;
+
+    @DBRef
+    private TimePeriodDto validFor;
 
     @DBRef
     private List < ContactMedium > contactMediumIdList;

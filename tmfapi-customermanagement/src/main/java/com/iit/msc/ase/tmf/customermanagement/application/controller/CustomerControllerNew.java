@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
 import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
+import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.TimePeriod;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
@@ -33,6 +34,9 @@ public class CustomerControllerNew extends BaseController {
     @Autowired
     private TimePeriodService timePeriodService;
 
+    @Autowired
+    private CustomerService customerService;
+
     /**
      * This method is to create a customer entity.
      *
@@ -49,11 +53,8 @@ public class CustomerControllerNew extends BaseController {
                     CustomerDto customerDto, HttpServletRequest request) throws BaseException {
 //        setLogIdentifier(request);
         logger.debug("create customer");
-
-        TimePeriod timePeriod = getModelMapper().map(customerDto.getValidFor(), TimePeriod.class);
+        customerService.create(customerDto);
         logger.debug("create customer ended");
-        timePeriodService.create(timePeriod);
-        //how
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

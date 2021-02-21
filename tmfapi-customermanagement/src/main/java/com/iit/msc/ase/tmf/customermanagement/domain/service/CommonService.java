@@ -2,6 +2,8 @@ package com.iit.msc.ase.tmf.customermanagement.domain.service;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 public interface CommonService {
 

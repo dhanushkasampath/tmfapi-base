@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @since 2021.02.14
  */
 @Repository
-public interface TimePeriodRepository extends MongoRepository < TimePeriod, Integer > {
+public interface TimePeriodRepository extends MongoRepository < TimePeriod, String > {
 
 
 }
