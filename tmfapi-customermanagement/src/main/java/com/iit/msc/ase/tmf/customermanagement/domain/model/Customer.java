@@ -33,31 +33,31 @@ public class Customer {
     private String schemaLocation;
 
     @DBRef
-    private EngagedPartyDto engagedParty;
+    private EngagedParty engagedParty;
 
     @DBRef
-    private TimePeriodDto validFor;
+    private TimePeriod validFor;
 
     @DBRef
-    private List < ContactMedium > contactMediumIdList;
+    private List < ContactMedium > contactMedium;
 
     @DBRef
-    private List < CreditProfile > creditProfileIdList;
+    private List < CreditProfile > creditProfile;
 
     @DBRef
-    private List < AgreementRef > agreementIdList;
+    private List < AgreementRef > agreement;
 
     @DBRef
-    private List < RelatedParty > relatedPartyIdList;
+    private List < RelatedParty > relatedParty;
 
     @DBRef
-    private List < Characteristic > characteristicIdList;
+    private List < Characteristic > characteristic;
 
     @DBRef
-    private List < PaymentRef > paymentMethodIdList;
+    private List < PaymentRef > paymentMethod;
 
     @DBRef
-    private List < AccountRef > accountIdList;
+    private List < AccountRef > account;
 
 
 }
