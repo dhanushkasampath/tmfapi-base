@@ -27,6 +27,6 @@ public class ContactMedium {
     private TimePeriod validFor;
     private MediumCharacteristic characteristic;
     private String baseType;
-    private String type;
+    private String referredType;
     private String schemaLocation;
 }

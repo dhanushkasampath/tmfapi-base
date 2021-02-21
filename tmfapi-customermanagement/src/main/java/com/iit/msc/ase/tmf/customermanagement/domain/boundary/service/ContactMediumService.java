@@ -10,6 +10,6 @@ public interface ContactMediumService extends CommonService {
 
     ContactMedium create(ContactMedium contactMedium);
 
-//    List < ContactMedium > findByReferredType(String referencedType);
+    List < ContactMedium > findByReferredType(String referredType);
 
 }

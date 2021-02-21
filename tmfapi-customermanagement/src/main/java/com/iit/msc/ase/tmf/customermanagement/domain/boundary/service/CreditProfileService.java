@@ -10,6 +10,6 @@ public interface CreditProfileService extends CommonService {
 
     CreditProfile create(CreditProfile creditProfile);
 
-//    List < AccountRef > findByReferredType(String referencedType);
+    List < CreditProfile > findByType(String type);
 
 }

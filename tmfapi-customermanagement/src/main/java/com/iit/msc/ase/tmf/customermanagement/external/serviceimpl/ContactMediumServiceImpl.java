@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
+import java.util.List;
+
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.ContactMediumRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.ContactMediumService;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.ContactMedium;
@@ -21,6 +23,12 @@ public class ContactMediumServiceImpl implements ContactMediumService {
     public ContactMedium create(ContactMedium contactMedium) {
         log("create method of ContactMedium started");
         return contactMediumRepository.save(contactMedium);
+    }
+
+    @Override
+    public List < ContactMedium > findByReferredType(String referredType) {
+        log("findByReferredType method of ContactMedium started");
+        return contactMediumRepository.findByReferredType(referredType);
     }
 
 }

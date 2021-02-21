@@ -43,8 +43,8 @@ public class ContactMediumDto {
 
     @JsonProperty( "@baseType" )
     private String baseType;
-    @JsonProperty( "@type" )
-    private String type;
+    @JsonProperty( "@referredType" )
+    private String referredType;
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
@@ -57,7 +57,7 @@ public class ContactMediumDto {
                 ", validFor=" + validFor +
                 ", characteristic=" + characteristic +
                 ", baseType='" + baseType + '\'' +
-                ", type='" + type + '\'' +
+                ", referredType='" + referredType + '\'' +
                 ", schemaLocation='" + schemaLocation + '\'' +
                 '}';
     }
