@@ -1,6 +1,5 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
-import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,7 @@ public class CreditProfile {
     private String creditProfileDate;
     private int creditScore;
     private String baseType;
-    private TimePeriodDto validFor;
+    private TimePeriod validFor;
     private String type;
     private int creditRiskRating;
     private String schemaLocation;

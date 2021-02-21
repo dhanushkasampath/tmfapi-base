@@ -9,6 +9,6 @@ public interface CharacteristicService extends CommonService {
 
     Characteristic create(Characteristic characteristic);
 
-//    List < Characteristic > findByReferredType(String referencedType);
+    List < Characteristic > findByName(String name);
 
 }

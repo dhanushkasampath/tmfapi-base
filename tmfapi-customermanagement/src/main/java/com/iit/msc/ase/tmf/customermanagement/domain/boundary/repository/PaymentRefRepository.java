@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository;
 
+import java.util.List;
+
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaymentRefRepository extends MongoRepository < PaymentRef, String > {
 
+    List < PaymentRef > findByReferredType(String referredType);
 
 }

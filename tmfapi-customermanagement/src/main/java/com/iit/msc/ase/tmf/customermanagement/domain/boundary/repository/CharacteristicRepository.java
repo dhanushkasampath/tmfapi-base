@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository;
 
+import java.util.List;
+
 import com.iit.msc.ase.tmf.customermanagement.domain.model.Characteristic;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CharacteristicRepository extends MongoRepository < Characteristic, String > {
 
+
+    List < Characteristic > findByName(String name);
 
 }

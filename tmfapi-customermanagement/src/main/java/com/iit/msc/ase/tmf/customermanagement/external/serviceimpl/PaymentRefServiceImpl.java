@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
+import java.util.List;
+
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.PaymentRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
@@ -21,6 +23,12 @@ public class PaymentRefServiceImpl implements PaymentRefService {
     public PaymentRef create(PaymentRef paymentRef) {
         log("create method of PaymentRef started");
         return paymentRefRepository.save(paymentRef);
+    }
+
+    @Override
+    public List < PaymentRef > findByReferredType(String referredType) {
+        log("findByReferredType method of PaymentRef started");
+        return paymentRefRepository.findByReferredType(referredType);
     }
 
 }

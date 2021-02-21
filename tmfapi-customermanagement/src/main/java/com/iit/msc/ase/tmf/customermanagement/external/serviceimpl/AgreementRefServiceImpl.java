@@ -1,5 +1,7 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
+import java.util.List;
+
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.AgreementRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AgreementRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AgreementRef;
@@ -21,6 +23,11 @@ public class AgreementRefServiceImpl implements AgreementRefService {
     public AgreementRef create(AgreementRef agreementRef) {
         log("create method of AgreementRef started");
         return agreementRefRepository.save(agreementRef);
+    }
+
+    @Override
+    public List < AgreementRef > findByReferredType(String referredType) {
+        return agreementRefRepository.findByReferredType(referredType);
     }
 
 }

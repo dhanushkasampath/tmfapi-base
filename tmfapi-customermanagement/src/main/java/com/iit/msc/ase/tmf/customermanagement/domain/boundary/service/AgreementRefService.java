@@ -10,6 +10,6 @@ public interface AgreementRefService extends CommonService {
 
     AgreementRef create(AgreementRef agreementRef);
 
-//    List < AgreementRef > findByReferredType(String referencedType);
+    List < AgreementRef > findByReferredType(String referredType);
 
 }

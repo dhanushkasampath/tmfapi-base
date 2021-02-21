@@ -1,7 +1,5 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
-import com.iit.msc.ase.tmf.datamodel.domain.dto.MediumCharacteristicDto;
-import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,8 +24,8 @@ public class ContactMedium {
     private String immediateParentId;
     private String mediumType;
     private boolean preferred;
-    private TimePeriodDto validFor;
-    private MediumCharacteristicDto characteristic;
+    private TimePeriod validFor;
+    private MediumCharacteristic characteristic;
     private String baseType;
     private String type;
     private String schemaLocation;

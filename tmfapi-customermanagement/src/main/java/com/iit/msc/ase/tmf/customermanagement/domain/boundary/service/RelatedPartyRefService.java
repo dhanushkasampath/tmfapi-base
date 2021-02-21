@@ -9,6 +9,6 @@ public interface RelatedPartyRefService extends CommonService {
 
     RelatedParty create(RelatedParty relatedParty);
 
-//    List < RelatedParty > findByReferredType(String referencedType);
+    List < RelatedParty > findByReferredType(String referredType);
 
 }

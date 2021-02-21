@@ -10,6 +10,6 @@ public interface PaymentRefService extends CommonService {
 
     PaymentRef create(PaymentRef paymentRef);
 
-//    List < PaymentRef > findByReferredType(String referencedType);
+    List < PaymentRef > findByReferredType(String referredType);
 
 }
