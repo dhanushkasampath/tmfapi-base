@@ -33,7 +33,7 @@ public class Customer {
     private String schemaLocation;
 
     @DBRef
-    private EngagedParty engagedParty;
+    private List < EngagedParty > engagedParty;
 
     @DBRef
     private TimePeriod validFor;

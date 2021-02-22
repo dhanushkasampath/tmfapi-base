@@ -10,6 +10,6 @@ public interface EngagedPartyService extends CommonService {
 
     EngagedParty create(EngagedParty engagedParty);
 
-//    List < EngagedParty > findByReferredType(String referencedType);
+    List < EngagedParty > findByReferredType(String referredType);
 
 }

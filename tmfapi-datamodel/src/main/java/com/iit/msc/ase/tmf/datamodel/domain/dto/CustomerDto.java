@@ -54,6 +54,7 @@ public class CustomerDto {
     @Valid
     private List < AccountRefDto > account;
     @NotNull
-    private EngagedPartyDto engagedParty;
+    private List < EngagedPartyDto > engagedParty;
     private String status;
+
 }

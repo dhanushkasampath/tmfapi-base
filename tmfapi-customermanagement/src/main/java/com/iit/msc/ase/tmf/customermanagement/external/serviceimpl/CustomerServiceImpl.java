@@ -11,6 +11,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.Characteri
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.ContactMediumService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CreditProfileService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
+import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.EngagedPartyService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.RelatedPartyRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
@@ -22,6 +23,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.model.Characteristic;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.ContactMedium;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.CreditProfile;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.EngagedParty;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.RelatedParty;
 import com.iit.msc.ase.tmf.customermanagement.external.util.Constants;
@@ -31,6 +33,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.CharacteristicDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.ContactMediumDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.CreditProfileDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
+import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.PaymentRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
 import org.modelmapper.ModelMapper;
@@ -66,6 +69,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ContactMediumService contactMediumService;
 
+    @Autowired
+    private EngagedPartyService engagedPartyService;
+
     @Override
     public CreateCustomerRespDto create(CreateCustomerReqDto createCustomerReqDto) {
         log("create method of Customer started");
@@ -78,6 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setRelatedParty(getRelatedPartiesList(createCustomerReqDto.getCustomer()));
         customer.setCreditProfile(getCreditProfileList(createCustomerReqDto.getCustomer()));
         customer.setContactMedium(getContactMediumList(createCustomerReqDto.getCustomer()));
+        customer.setEngagedParty(getEngagedPartyList(createCustomerReqDto.getCustomer()));
 
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
@@ -92,6 +99,26 @@ public class CustomerServiceImpl implements CustomerService {
         createCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("create method of Customer ended");
         return createCustomerRespDto;
+    }
+
+    private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {
+        List < EngagedPartyDto > engagedPartyDtoList = customerDto.getEngagedParty();
+        List < EngagedParty > engagedPartyList = new ArrayList <>();
+        for ( EngagedPartyDto engagedPartyDto : engagedPartyDtoList ) {
+            //find by @ReferredType
+            List < EngagedParty > existingEngagedPartyList = engagedPartyService.findByReferredType(engagedPartyDto.getReferredType());
+            if ( existingEngagedPartyList != null ) {
+                if ( !existingEngagedPartyList.isEmpty() ) {
+                    engagedPartyList.add(existingEngagedPartyList.get(0));
+                } else {
+                    engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
+                }
+            } else {
+                //create a new record and add to list
+                engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
+            }
+        }
+        return engagedPartyList;
     }
 
     private List < ContactMedium > getContactMediumList(CustomerDto customerDto) {
