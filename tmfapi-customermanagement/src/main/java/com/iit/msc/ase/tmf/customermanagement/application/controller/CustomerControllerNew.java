@@ -7,8 +7,8 @@ import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
 import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.TimePeriod;
-import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +37,17 @@ public class CustomerControllerNew extends BaseController {
     @Autowired
     private CustomerService customerService;
 
-    /**
-     * This method is to create a customer entity.
-     *
-     * @param customerDto This is the first parameter
-     * @param request     This is the second parameter
-     * @return ResponseEntity This returns created customer entity
-     * @throws BaseException
-     */
+
     @PostMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity createCustomer(
             @Valid
             @RequestBody( required = true )
-                    CustomerDto customerDto, HttpServletRequest request) throws BaseException {
-//        setLogIdentifier(request);
-        logger.debug("Received request to create customer:{}", mapObjToString(customerDto));
-        customerService.create(customerDto);
-        logger.debug("Return response after creating a customer");
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+                    CreateCustomerReqDto createCustomerReqDto, HttpServletRequest request) throws BaseException {
+        logger.debug("Received request to create customer:{}", mapObjToString(createCustomerReqDto));
+        CreateCustomerRespDto createCustomerRespDto = customerService.create(createCustomerReqDto);
+        logger.debug("Return response after creating a customer|createCustomerRespDto:{}", mapObjToString(createCustomerRespDto));
+        return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode()));
     }
 
 }

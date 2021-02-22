@@ -1,5 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,9 @@ import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CreditProf
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.RelatedPartyRefService;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.headers.ResponseHeaderDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AgreementRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.Characteristic;
@@ -20,6 +24,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.model.CreditProfile;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.RelatedParty;
+import com.iit.msc.ase.tmf.customermanagement.external.util.Constants;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AccountRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AgreementRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.CharacteristicDto;
@@ -31,6 +36,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -61,20 +67,31 @@ public class CustomerServiceImpl implements CustomerService {
     private ContactMediumService contactMediumService;
 
     @Override
-    public Customer create(CustomerDto customerDto) {
+    public CreateCustomerRespDto create(CreateCustomerReqDto createCustomerReqDto) {
         log("create method of Customer started");
-        Customer customer = getModelMapper().map(customerDto, Customer.class);//mapping basic parameters
+        Customer customer = getModelMapper().map(createCustomerReqDto.getCustomer(), Customer.class);//mapping basic parameters
 
-        customer.setAccount(getAccountRefsList(customerDto));
-        customer.setAgreement(getAgreementRefsList(customerDto));
-        customer.setCharacteristic(getCharacteristicsList(customerDto));
-        customer.setPaymentMethod(getPaymentMethodList(customerDto));
-        customer.setRelatedParty(getRelatedPartiesList(customerDto));
-        customer.setCreditProfile(getCreditProfileList(customerDto));
-        customer.setContactMedium(getContactMediumList(customerDto));
+        customer.setAccount(getAccountRefsList(createCustomerReqDto.getCustomer()));
+        customer.setAgreement(getAgreementRefsList(createCustomerReqDto.getCustomer()));
+        customer.setCharacteristic(getCharacteristicsList(createCustomerReqDto.getCustomer()));
+        customer.setPaymentMethod(getPaymentMethodList(createCustomerReqDto.getCustomer()));
+        customer.setRelatedParty(getRelatedPartiesList(createCustomerReqDto.getCustomer()));
+        customer.setCreditProfile(getCreditProfileList(createCustomerReqDto.getCustomer()));
+        customer.setContactMedium(getContactMediumList(createCustomerReqDto.getCustomer()));
 
+        CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        if ( customerRepository.save(customer) != null ) {
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+            responseHeaderDto.setResponseDesc("Operation successful");
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+        }
+
+        responseHeaderDto.setRequestId(createCustomerReqDto.getRequestHeader().getRequestId());
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        createCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("create method of Customer ended");
-        return customerRepository.save(customer);
+        return createCustomerRespDto;
     }
 
     private List < ContactMedium > getContactMediumList(CustomerDto customerDto) {
