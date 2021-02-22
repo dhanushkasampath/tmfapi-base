@@ -52,9 +52,9 @@ public class CustomerControllerNew extends BaseController {
             @RequestBody( required = true )
                     CustomerDto customerDto, HttpServletRequest request) throws BaseException {
 //        setLogIdentifier(request);
-        logger.debug("create customer");
+        logger.debug("Received request to create customer:{}", mapObjToString(customerDto));
         customerService.create(customerDto);
-        logger.debug("create customer ended");
+        logger.debug("Return response after creating a customer");
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
