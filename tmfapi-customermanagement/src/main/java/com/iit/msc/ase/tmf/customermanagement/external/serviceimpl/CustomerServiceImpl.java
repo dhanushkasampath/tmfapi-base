@@ -16,6 +16,8 @@ import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRef
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.RelatedPartyRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.headers.ResponseHeaderDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AgreementRef;
@@ -92,8 +94,7 @@ public class CustomerServiceImpl implements CustomerService {
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Customer createdCustomer = customerRepository.save(customer);
         if ( createdCustomer != null ) {
-//            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseCode("200");
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
             responseHeaderDto.setResponseDesc("Operation successful");
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
         }
@@ -103,6 +104,11 @@ public class CustomerServiceImpl implements CustomerService {
         createCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("create method of Customer ended");
         return createCustomerRespDto;
+    }
+
+    @Override
+    public QueryAllCustomerRespDto queryAll(QueryAllCustomerReqDto queryAllCustomerReqDto) {
+        return null;
     }
 
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {
