@@ -31,12 +31,10 @@ public class Customer {
     private String baseType;
     private String name;
     private String schemaLocation;
+    private TimePeriod validFor;
 
     @DBRef
     private List < EngagedParty > engagedParty;
-
-    @DBRef
-    private TimePeriod validFor;
 
     @DBRef
     private List < ContactMedium > contactMedium;

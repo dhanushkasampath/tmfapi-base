@@ -9,8 +9,8 @@ import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerSe
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +47,7 @@ public class CustomerControllerNew extends BaseController {
         logger.debug("Received request to create customer:{}", mapObjToString(createCustomerReqDto));
         CreateCustomerRespDto createCustomerRespDto = customerService.create(createCustomerReqDto);
         logger.debug("Return response after creating a customer|createCustomerRespDto:{}", mapObjToString(createCustomerRespDto));
-        return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode()));
+        return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
 }

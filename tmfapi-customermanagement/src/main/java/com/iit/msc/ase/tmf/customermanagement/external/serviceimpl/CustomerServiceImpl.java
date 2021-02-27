@@ -26,6 +26,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.EngagedParty;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.RelatedParty;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.TimePeriod;
 import com.iit.msc.ase.tmf.customermanagement.external.util.Constants;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AccountRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AgreementRefDto;
@@ -36,6 +37,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.PaymentRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
+import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +90,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        if ( customerRepository.save(customer) != null ) {
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+        Customer createdCustomer = customerRepository.save(customer);
+        if ( createdCustomer != null ) {
+//            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+            responseHeaderDto.setResponseCode("200");
             responseHeaderDto.setResponseDesc("Operation successful");
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
         }

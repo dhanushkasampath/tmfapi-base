@@ -28,7 +28,7 @@ public class CustomerDto {
     public static final String ACCOUNT_TABLE = "AccountRef";
     public static final String ENGAGEDPARTY_TABLE = "EngagedParty";
     public static final String VALIDFOR_TABLE = "TimePeriod";
-    @NotNull
+
     private String id;
     @NotNull
     private String href;
