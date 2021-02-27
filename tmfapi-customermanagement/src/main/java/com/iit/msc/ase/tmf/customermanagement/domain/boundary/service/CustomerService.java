@@ -14,4 +14,6 @@ public interface CustomerService extends CommonService {
 
     QueryCustomerByIdRespDto queryById(String id);
 
+    void deleteById(String id);
+
 }

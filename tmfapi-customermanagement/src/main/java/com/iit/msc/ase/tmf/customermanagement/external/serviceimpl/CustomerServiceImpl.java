@@ -136,6 +136,14 @@ public class CustomerServiceImpl implements CustomerService {
         return queryCustomerByIdRespDto;
     }
 
+    @Override
+    public void deleteById(String id) {
+        log("deleteById method of Customer started|id:{}", id);
+        customerRepository.deleteById(id);
+        log("deleteById method of Customer ended");
+
+    }
+
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {
         List < EngagedPartyDto > engagedPartyDtoList = customerDto.getEngagedParty();
         List < EngagedParty > engagedPartyList = new ArrayList <>();
