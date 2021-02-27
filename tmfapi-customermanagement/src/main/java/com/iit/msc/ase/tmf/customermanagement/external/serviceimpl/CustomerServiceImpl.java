@@ -3,6 +3,7 @@ package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AccountRefService;
@@ -16,8 +17,8 @@ import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRef
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.RelatedPartyRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
-import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.headers.ResponseHeaderDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AgreementRef;
@@ -28,7 +29,6 @@ import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.EngagedParty;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.RelatedParty;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.TimePeriod;
 import com.iit.msc.ase.tmf.customermanagement.external.util.Constants;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AccountRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AgreementRefDto;
@@ -39,7 +39,6 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.CustomerDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.PaymentRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
-import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,8 +106,34 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryAllCustomerRespDto queryAll(QueryAllCustomerReqDto queryAllCustomerReqDto) {
+    public QueryAllCustomerRespDto queryAll() {
+        log("queryAll method of Customer started");
+        List < Customer > customerList = customerRepository.findAll();
+        log("queryAll method of Customer ended");
         return null;
+    }
+
+    @Override
+    public QueryCustomerByIdRespDto queryById(String id) {
+        log("queryById method of Customer started|id:{}", id);
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = new QueryCustomerByIdRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        Optional < Customer > customer = customerRepository.findById(id);
+        if(customer.isPresent()){
+            queryCustomerByIdRespDto.setResponseData(customer.get());
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+            responseHeaderDto.setResponseDesc("Operation successful");
+        }else{
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+            responseHeaderDto.setResponseDesc("Customer not found");
+        }
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        responseHeaderDto.setRequestId("123");
+        queryCustomerByIdRespDto.setResponseHeader(responseHeaderDto);
+        log("queryById method of Customer ended");
+        return queryCustomerByIdRespDto;
     }
 
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {

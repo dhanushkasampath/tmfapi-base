@@ -14,4 +14,6 @@ public class Constants {
 
     public static final String CXM1000 = "CXM1000";//Success
 
+    public static final String CXM2000 = "CXM2000";//no customer record found by id
+
 }

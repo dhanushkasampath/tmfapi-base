@@ -4,13 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
-import com.iit.msc.ase.tmf.commonconfig.application.exception.type.BaseException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
-import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,11 +47,11 @@ public class CustomerControllerNew extends BaseController {
             @Valid
             @RequestBody( required = true )
                     CreateCustomerReqDto createCustomerReqDto, HttpServletRequest request) {
-        if(logger.isInfoEnabled()){
+        if ( logger.isInfoEnabled() ) {
             logger.info("Received request to create customer:{}", mapObjToString(createCustomerReqDto));
         }
         CreateCustomerRespDto createCustomerRespDto = customerService.create(createCustomerReqDto);
-        if(logger.isInfoEnabled()){
+        if ( logger.isInfoEnabled() ) {
             logger.info("Return response after creating a customer|createCustomerRespDto:{}", mapObjToString(createCustomerRespDto));
         }
         return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode())));
@@ -59,23 +59,38 @@ public class CustomerControllerNew extends BaseController {
 
     @GetMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity queryAllCustomers(@Valid
-                                            @RequestBody( required = true )
-                                                    QueryAllCustomerReqDto queryAllCustomerReqDto,
-                                            @RequestParam( value = "offset",
-                                                    required = true )
-                                                    String offset,
-                                            @RequestParam( value = "limit",
-                                                    required = true )
-                                                    String limit, HttpServletRequest request) {
-        if(logger.isInfoEnabled()){
-            logger.info("Received request to query all customers|offset:{}|limit:{}|queryAllCustomerReqDto:{}", offset, limit, mapObjToString(queryAllCustomerReqDto));
+    public ResponseEntity queryAllCustomers(
+            @RequestParam( value = "offset",
+                    required = true )
+                    String offset,
+            @RequestParam( value = "limit",
+                    required = true )
+                    String limit, HttpServletRequest request) {
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Received request to query all customers|offset:{}|limit:{}", offset, limit);
         }
-        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(queryAllCustomerReqDto);
-        if(logger.isInfoEnabled()){
+        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll();
+        if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying all customers|:{}", mapObjToString(queryAllCustomerRespDto));
         }
         return new ResponseEntity <>(queryAllCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(queryAllCustomerRespDto.getResponseHeader().getResponseCode())));
+    }
+
+    @GetMapping( value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE )
+    public ResponseEntity queryCustomerById(
+            @PathVariable( name = "id",
+                    required = true )
+                    String id,
+            HttpServletRequest request) {
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Received request to query customer by id:{}", id);
+        }
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = customerService.queryById(id);
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Return response after querying customer by id:{}|{}", id, mapObjToString(queryCustomerByIdRespDto));
+        }
+        return new ResponseEntity <>(queryCustomerByIdRespDto, HttpStatus.valueOf(Integer.valueOf(queryCustomerByIdRespDto.getResponseHeader().getResponseCode())));
     }
 
 }
