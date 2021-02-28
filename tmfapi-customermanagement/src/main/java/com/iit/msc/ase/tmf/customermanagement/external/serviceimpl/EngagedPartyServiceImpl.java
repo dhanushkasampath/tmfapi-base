@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.EngagedPartyRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.EngagedPartyService;
@@ -26,9 +26,10 @@ public class EngagedPartyServiceImpl implements EngagedPartyService {
     }
 
     @Override
-    public List < EngagedParty > findByReferredType(String referredType) {
+    public EngagedParty findById(String id) {
         log("findByReferredType method of EngagedParty started");
-        return engagedPartyRepository.findByReferredType(referredType);
+        Optional < EngagedParty > engagedPartyOptional = engagedPartyRepository.findById(id);
+        return engagedPartyOptional.orElse(null);
     }
 
 }

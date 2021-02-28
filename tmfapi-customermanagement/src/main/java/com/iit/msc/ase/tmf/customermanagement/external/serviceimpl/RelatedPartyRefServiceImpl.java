@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.RelatedPartyRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.RelatedPartyRefService;
@@ -26,8 +26,10 @@ public class RelatedPartyRefServiceImpl implements RelatedPartyRefService {
     }
 
     @Override
-    public List < RelatedParty > findByReferredType(String referredType) {
-        return relatedPartyRefRepository.findByReferredType(referredType);
+    public RelatedParty findById(String id) {
+        log("findById method of RelatedParty started");
+        Optional < RelatedParty > relatedPartyOptional = relatedPartyRefRepository.findById(id);
+        return relatedPartyOptional.orElse(null);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.PaymentRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRefService;
@@ -26,9 +26,10 @@ public class PaymentRefServiceImpl implements PaymentRefService {
     }
 
     @Override
-    public List < PaymentRef > findByReferredType(String referredType) {
+    public PaymentRef findById(String id) {
         log("findByReferredType method of PaymentRef started");
-        return paymentRefRepository.findByReferredType(referredType);
+        Optional < PaymentRef > paymentRefOptional = paymentRefRepository.findById(id);
+        return paymentRefOptional.orElse(null);
     }
 
 }

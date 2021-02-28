@@ -111,12 +111,12 @@ public class CustomerServiceImpl implements CustomerService {
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         List < Customer > customerList = customerRepository.findAll();
-        if(!customerList.isEmpty()){
+        if ( !customerList.isEmpty() ) {
             queryAllCustomerRespDto.setResponseData(customerList);
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
             responseHeaderDto.setResponseDesc("Operation successful");
-        }else{
+        } else {
             responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
             responseHeaderDto.setResponseDesc("No records found");
@@ -135,12 +135,12 @@ public class CustomerServiceImpl implements CustomerService {
         QueryCustomerByIdRespDto queryCustomerByIdRespDto = new QueryCustomerByIdRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Optional < Customer > customer = customerRepository.findById(id);
-        if(customer.isPresent()){
+        if ( customer.isPresent() ) {
             queryCustomerByIdRespDto.setResponseData(customer.get());
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
             responseHeaderDto.setResponseDesc("Operation successful");
-        }else{
+        } else {
             responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
             responseHeaderDto.setResponseDesc("Customer not found");
@@ -164,17 +164,17 @@ public class CustomerServiceImpl implements CustomerService {
         List < EngagedPartyDto > engagedPartyDtoList = customerDto.getEngagedParty();
         List < EngagedParty > engagedPartyList = new ArrayList <>();
         for ( EngagedPartyDto engagedPartyDto : engagedPartyDtoList ) {
-            //find by @ReferredType
-            List < EngagedParty > existingEngagedPartyList = engagedPartyService.findByReferredType(engagedPartyDto.getReferredType());
-            if ( existingEngagedPartyList != null ) {
-                if ( !existingEngagedPartyList.isEmpty() ) {
-                    engagedPartyList.add(existingEngagedPartyList.get(0));
+            if ( engagedPartyDto.getId() == null ) {
+                engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
+            }else{
+                //find by @id
+                EngagedParty existingEngagedParty = engagedPartyService.findById(engagedPartyDto.getId());
+                if ( existingEngagedParty != null ) {
+                    engagedPartyList.add(existingEngagedParty);
                 } else {
+                    //create a new record and add to list
                     engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
                 }
-            } else {
-                //create a new record and add to list
-                engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
             }
         }
         return engagedPartyList;
@@ -224,17 +224,17 @@ public class CustomerServiceImpl implements CustomerService {
         List < PaymentRefDto > paymentRefDtoList = customerDto.getPaymentMethod();
         List < PaymentRef > paymentRefList = new ArrayList <>();
         for ( PaymentRefDto paymentRefDto : paymentRefDtoList ) {
-            //find by @referredType
-            List < PaymentRef > existingPaymentRefList = paymentRefService.findByReferredType(paymentRefDto.getReferredType());
-            if ( existingPaymentRefList != null ) {
-                if ( !existingPaymentRefList.isEmpty() ) {
-                    paymentRefList.add(existingPaymentRefList.get(0));
+            if(paymentRefDto.getId() == null){
+                paymentRefList.add(paymentRefService.create(getModelMapper().map(paymentRefDto, PaymentRef.class)));
+            }else{
+                //find by @referredType
+                PaymentRef existingPaymentRef = paymentRefService.findById(paymentRefDto.getId());
+                if ( existingPaymentRef != null ) {
+                    paymentRefList.add(existingPaymentRef);
                 } else {
+                    //create a new record and add to list
                     paymentRefList.add(paymentRefService.create(getModelMapper().map(paymentRefDto, PaymentRef.class)));
                 }
-            } else {
-                //create a new record and add to list
-                paymentRefList.add(paymentRefService.create(getModelMapper().map(paymentRefDto, PaymentRef.class)));
             }
         }
         return paymentRefList;
@@ -244,10 +244,10 @@ public class CustomerServiceImpl implements CustomerService {
         List < AccountRefDto > accountRefDtoList = customerDto.getAccount();
         List < AccountRef > accountRefList = new ArrayList <>();
         for ( AccountRefDto accountRefDto : accountRefDtoList ) {
-            if(accountRefDto.getId() == null){
+            if ( accountRefDto.getId() == null ) {
                 //create a new record and add to list
                 accountRefList.add(accountRefService.create(getModelMapper().map(accountRefDto, AccountRef.class)));
-            }else{
+            } else {
                 //find by id
                 AccountRef existingAccountRef = accountRefService.findById(accountRefDto.getReferredType());
                 if ( existingAccountRef != null ) {
@@ -265,10 +265,10 @@ public class CustomerServiceImpl implements CustomerService {
         List < AgreementRefDto > agreementRefDtoList = customerDto.getAgreement();
         List < AgreementRef > agreementRefList = new ArrayList <>();
         for ( AgreementRefDto agreementRefDto : agreementRefDtoList ) {
-            if(agreementRefDto.getId() == null){
+            if ( agreementRefDto.getId() == null ) {
                 //create a new record and add to list
                 agreementRefList.add(agreementRefService.create(getModelMapper().map(agreementRefDto, AgreementRef.class)));
-            }else{
+            } else {
                 //find by @id
                 AgreementRef existingAgreementRef = agreementRefService.findById(agreementRefDto.getId());
                 if ( existingAgreementRef != null ) {
@@ -306,17 +306,17 @@ public class CustomerServiceImpl implements CustomerService {
         List < RelatedPartyDto > relatedPartyDtoList = customerDto.getRelatedParty();
         List < RelatedParty > relatedPartyList = new ArrayList <>();
         for ( RelatedPartyDto relatedPartyDto : relatedPartyDtoList ) {
-            //find by name
-            List < RelatedParty > existingRelatedPartyList = relatedPartyRefService.findByReferredType(relatedPartyDto.getReferredType());
-            if ( existingRelatedPartyList != null ) {
-                if ( !existingRelatedPartyList.isEmpty() ) {
-                    relatedPartyList.add(existingRelatedPartyList.get(0));
+            if(relatedPartyDto.getId() == null){
+                relatedPartyList.add(relatedPartyRefService.create(getModelMapper().map(relatedPartyDto, RelatedParty.class)));
+            }else{
+                //find by id
+                RelatedParty existingRelatedParty = relatedPartyRefService.findById(relatedPartyDto.getId());
+                if ( existingRelatedParty != null ) {
+                    relatedPartyList.add(existingRelatedParty);
                 } else {
+                    //create a new record and add to list
                     relatedPartyList.add(relatedPartyRefService.create(getModelMapper().map(relatedPartyDto, RelatedParty.class)));
                 }
-            } else {
-                //create a new record and add to list
-                relatedPartyList.add(relatedPartyRefService.create(getModelMapper().map(relatedPartyDto, RelatedParty.class)));
             }
         }
         return relatedPartyList;
