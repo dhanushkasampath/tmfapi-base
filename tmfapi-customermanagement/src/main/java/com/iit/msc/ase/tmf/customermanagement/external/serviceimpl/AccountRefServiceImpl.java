@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.AccountRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AccountRefService;
@@ -21,9 +21,10 @@ public class AccountRefServiceImpl implements AccountRefService {
     }
 
     @Override
-    public List < AccountRef > findByReferredType(String referencedType) {
-        log("findByReferredType method of AccountRef started|referencedType:{}", referencedType);
-        return accountRefRepository.findByReferredType(referencedType);
+    public AccountRef findById(String id) {
+        log("findByReferredType method of AccountRef started|referencedType:{}", id);
+        Optional < AccountRef > accountRefOptional = accountRefRepository.findById(id);
+        return accountRefOptional.orElse(null);
     }
 
 }

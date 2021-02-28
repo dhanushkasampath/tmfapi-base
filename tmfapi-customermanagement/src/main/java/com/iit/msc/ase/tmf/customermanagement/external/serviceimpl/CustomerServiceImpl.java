@@ -244,17 +244,18 @@ public class CustomerServiceImpl implements CustomerService {
         List < AccountRefDto > accountRefDtoList = customerDto.getAccount();
         List < AccountRef > accountRefList = new ArrayList <>();
         for ( AccountRefDto accountRefDto : accountRefDtoList ) {
-            //find by @referredType
-            List < AccountRef > existingAccountRefList = accountRefService.findByReferredType(accountRefDto.getReferredType());
-            if ( existingAccountRefList != null ) {
-                if ( !existingAccountRefList.isEmpty() ) {
-                    accountRefList.add(existingAccountRefList.get(0));
-                } else {
-                    accountRefList.add(accountRefService.create(getModelMapper().map(accountRefDto, AccountRef.class)));
-                }
-            } else {
+            if(accountRefDto.getId() == null){
                 //create a new record and add to list
                 accountRefList.add(accountRefService.create(getModelMapper().map(accountRefDto, AccountRef.class)));
+            }else{
+                //find by id
+                AccountRef existingAccountRef = accountRefService.findById(accountRefDto.getReferredType());
+                if ( existingAccountRef != null ) {
+                    accountRefList.add(existingAccountRef);
+                } else {
+                    //create a new record and add to list
+                    accountRefList.add(accountRefService.create(getModelMapper().map(accountRefDto, AccountRef.class)));
+                }
             }
         }
         return accountRefList;
@@ -264,17 +265,18 @@ public class CustomerServiceImpl implements CustomerService {
         List < AgreementRefDto > agreementRefDtoList = customerDto.getAgreement();
         List < AgreementRef > agreementRefList = new ArrayList <>();
         for ( AgreementRefDto agreementRefDto : agreementRefDtoList ) {
-            //find by @referredType
-            List < AgreementRef > existingAgreementRefList = agreementRefService.findByReferredType(agreementRefDto.getReferredType());
-            if ( existingAgreementRefList != null ) {
-                if ( !existingAgreementRefList.isEmpty() ) {
-                    agreementRefList.add(existingAgreementRefList.get(0));
-                } else {
-                    agreementRefList.add(agreementRefService.create(getModelMapper().map(agreementRefDto, AgreementRef.class)));
-                }
-            } else {
+            if(agreementRefDto.getId() == null){
                 //create a new record and add to list
                 agreementRefList.add(agreementRefService.create(getModelMapper().map(agreementRefDto, AgreementRef.class)));
+            }else{
+                //find by @id
+                AgreementRef existingAgreementRef = agreementRefService.findById(agreementRefDto.getId());
+                if ( existingAgreementRef != null ) {
+                    agreementRefList.add(existingAgreementRef);
+                } else {
+                    //create a new record and add to list
+                    agreementRefList.add(agreementRefService.create(getModelMapper().map(agreementRefDto, AgreementRef.class)));
+                }
             }
         }
         return agreementRefList;
