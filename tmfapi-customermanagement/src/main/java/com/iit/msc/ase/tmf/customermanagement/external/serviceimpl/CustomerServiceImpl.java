@@ -108,9 +108,25 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public QueryAllCustomerRespDto queryAll() {
         log("queryAll method of Customer started");
+        QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         List < Customer > customerList = customerRepository.findAll();
+        if(!customerList.isEmpty()){
+            queryAllCustomerRespDto.setResponseData(customerList);
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+            responseHeaderDto.setResponseDesc("Operation successful");
+        }else{
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+            responseHeaderDto.setResponseDesc("No records found");
+        }
+
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        responseHeaderDto.setRequestId("123");
+        queryAllCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("queryAll method of Customer ended");
-        return null;
+        return queryAllCustomerRespDto;
     }
 
     @Override

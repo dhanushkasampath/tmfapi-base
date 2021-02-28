@@ -1,5 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.application.controller;
 
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -61,6 +62,8 @@ public class CustomerControllerNew extends BaseController {
     @GetMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity queryAllCustomers(
+            @RequestParam( required = false )
+                    Map < String, String > filters,
             @RequestParam( value = "offset",
                     required = true )
                     String offset,
