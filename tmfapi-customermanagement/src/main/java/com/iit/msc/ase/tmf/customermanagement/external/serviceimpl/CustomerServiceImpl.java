@@ -3,6 +3,7 @@ package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
@@ -106,22 +107,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryAllCustomerRespDto queryAll() {
+    public QueryAllCustomerRespDto queryAll(Map < String, String > filters) {
         log("queryAll method of Customer started");
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        List < Customer > customerList = customerRepository.findAll();
-        if ( !customerList.isEmpty() ) {
-            queryAllCustomerRespDto.setResponseData(customerList);
-            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc("Operation successful");
-        } else {
-            responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
-            responseHeaderDto.setResponseDesc("No records found");
-        }
 
+        if(filters != null){
+            List < Customer > customerList = customerRepository.findAll();
+        }else{
+            List < Customer > customerList = customerRepository.findAll();
+            if ( !customerList.isEmpty() ) {
+                queryAllCustomerRespDto.setResponseData(customerList);
+                responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+                responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+                responseHeaderDto.setResponseDesc("Operation successful");
+            } else {
+                responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
+                responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+                responseHeaderDto.setResponseDesc("No records found");
+            }
+        }
         responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
         responseHeaderDto.setRequestId("123");
         queryAllCustomerRespDto.setResponseHeader(responseHeaderDto);
