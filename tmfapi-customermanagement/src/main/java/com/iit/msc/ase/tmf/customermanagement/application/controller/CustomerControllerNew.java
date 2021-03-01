@@ -88,6 +88,8 @@ public class CustomerControllerNew extends BaseController {
             @PathVariable( name = "id",
                     required = true )
                     String id,
+            @RequestParam( required = false )
+                    String fields,
             HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query customer by id:{}", id);
