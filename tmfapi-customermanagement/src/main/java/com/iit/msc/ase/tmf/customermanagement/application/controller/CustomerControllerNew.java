@@ -75,7 +75,7 @@ public class CustomerControllerNew extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query all customers|offset:{}|limit:{}", offset, limit);
         }
-        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(filters);
+        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(filters, fields, offset, limit);
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying all customers|:{}", mapObjToString(queryAllCustomerRespDto));
         }

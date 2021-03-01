@@ -107,7 +107,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryAllCustomerRespDto queryAll(Map < String, String > filters) {
+    public QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, String offset, String limit) {
         log("queryAll method of Customer started");
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();

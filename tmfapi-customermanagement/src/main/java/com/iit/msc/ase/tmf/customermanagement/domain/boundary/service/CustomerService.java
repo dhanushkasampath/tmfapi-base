@@ -12,7 +12,7 @@ public interface CustomerService extends CommonService {
 
     CreateCustomerRespDto create(CreateCustomerReqDto createCustomerReqDto);
 
-    QueryAllCustomerRespDto queryAll(Map < String, String > filters);
+    QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, String offset, String limit);
 
     QueryCustomerByIdRespDto queryById(String id);
 
