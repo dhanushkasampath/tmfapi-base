@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRepository extends MongoRepository < Customer, String > {
 
 
-    @Query(value="{\"engagedParty.referredType\":\"Organization\"}")//json can be passed as value  @Query(value="{}", fields="{name : 1, _id : 0}")
+    @Query(value="{\"account.referredType\":\"ChargingAccount\"}")//json can be passed as value  @Query(value="{}", fields="{name : 1, _id : 0}")
     List < Customer > findByFilters();
 
 }

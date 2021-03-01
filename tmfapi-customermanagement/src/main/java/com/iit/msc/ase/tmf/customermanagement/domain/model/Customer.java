@@ -2,13 +2,10 @@ package com.iit.msc.ase.tmf.customermanagement.domain.model;
 
 import java.util.List;
 
-import com.iit.msc.ase.tmf.datamodel.domain.dto.EngagedPartyDto;
-import com.iit.msc.ase.tmf.datamodel.domain.dto.TimePeriodDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -33,29 +30,20 @@ public class Customer {
     private String schemaLocation;
     private TimePeriod validFor;
 
-    @DBRef
     private List < EngagedParty > engagedParty;
 
-    @DBRef
     private List < ContactMedium > contactMedium;
 
-    @DBRef
     private List < CreditProfile > creditProfile;
 
-    @DBRef
     private List < AgreementRef > agreement;
 
-    @DBRef
     private List < RelatedParty > relatedParty;
 
-    @DBRef
     private List < Characteristic > characteristic;
 
-    @DBRef
     private List < PaymentRef > paymentMethod;
 
-    @DBRef
     private List < AccountRef > account;
-
 
 }

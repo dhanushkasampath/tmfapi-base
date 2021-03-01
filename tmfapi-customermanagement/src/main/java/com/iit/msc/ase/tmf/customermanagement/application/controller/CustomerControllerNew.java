@@ -64,6 +64,8 @@ public class CustomerControllerNew extends BaseController {
     public ResponseEntity queryAllCustomers(
             @RequestParam( required = false )
                     Map < String, String > filters,
+            @RequestParam( required = false )
+                    String fields,
             @RequestParam( value = "offset",
                     required = true )
                     String offset,
