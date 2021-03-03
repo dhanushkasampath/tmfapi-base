@@ -43,6 +43,8 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -111,9 +113,10 @@ public class CustomerServiceImpl implements CustomerService {
         log("queryAll method of Customer started");
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        Pageable requestedPage = PageRequest.of(Integer.parseInt(offset) - 1, Integer.parseInt(limit));
         List < Customer > customerList;
         if(filters != null){
-            customerList = customerRepository.findByFilters();
+            customerList = customerRepository.findByFilters(requestedPage);
         }else {
             customerList = customerRepository.findAll();
         }
