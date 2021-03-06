@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AccountRefService;
@@ -48,8 +50,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -122,14 +127,15 @@ public class CustomerServiceImpl implements CustomerService {
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Pageable requestedPage = PageRequest.of(offset - 1, limit);
-        Page < Customer > customerList;
-        if ( filters != null ) {
-            customerList = findByFilters(filters, requestedPage, offset, limit);
-        } else {
-            customerList = customerRepository.findAll(requestedPage);
-        }
+        List < Customer > customerList;
+//        if ( filters != null ) {
+//            customerList = findByFilters(filters, requestedPage, offset, limit);
+//        } else {
+//            //customerList = customerRepository.findAll(requestedPage);
+//        }
+        customerList = findByFilters(filters, fields, requestedPage, offset, limit);
         if ( !customerList.isEmpty() ) {
-            queryAllCustomerRespDto.setResponseData(customerList.getContent());
+            queryAllCustomerRespDto.setResponseData(customerList);
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
             responseHeaderDto.setResponseDesc("Operation successful");
@@ -148,23 +154,54 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * @param filters
+     * @param fields
      * @param requestedPage
-     * @param offset
-     * @param limit
+     * @param pageNumber
+     * @param pageSize
      * @return
      */
-    private Page < Customer > findByFilters(Map < String, String > filters, Pageable requestedPage, Integer offset, Integer limit) {
+    private List < Customer > findByFilters(Map < String, String > filters, String fields, Pageable requestedPage, Integer pageNumber, Integer pageSize) {
         log("findByFilters method started");
-        Query dynamicQuery = new Query();
-        for ( Map.Entry < String, String > entry : filters.entrySet() ) {
-            Criteria dynamicCriteria = Criteria.where(entry.getKey()).is(entry.getValue());
-            dynamicQuery.addCriteria(dynamicCriteria);
+        MatchOperation matchStage = null;
+        ProjectionOperation projectStage = null;
+        Aggregation aggregation = null;
+        if ( filters != null ) {
+            if ( fields != null ) {
+                filters.remove("fields");
+            }
+            List < Criteria > criterias = new ArrayList <>();
+            for ( Map.Entry < String, String > entry : filters.entrySet() ) {
+                Criteria criteria = Criteria.where(entry.getKey()).in(entry.getValue());
+                criterias.add(criteria);
+            }
+            matchStage = new MatchOperation(!criterias.isEmpty() ? new Criteria().andOperator(criterias.toArray(new Criteria[ criterias.size() ])) : new Criteria());
         }
-        List < Customer > customerList = mongoTemplate.find(dynamicQuery, Customer.class, "customer");
-        return getPage(customerList, requestedPage, offset, limit);
+        if ( fields != null ) {
+            List < String > requiredFieldList = Stream.of(fields.split(",", -1)).collect(Collectors.toList());
+//            projectStage = Aggregation.project("href", "status");//at lease 1 param should be there
+            projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));
+        }
+
+        if ( filters != null ) {
+            aggregation = Aggregation.newAggregation(matchStage);
+        }
+
+        if ( fields != null ) {
+            aggregation = Aggregation.newAggregation(projectStage);
+        }
+
+        if ( filters != null && fields != null ) {
+            aggregation = Aggregation.newAggregation(matchStage, projectStage);//, projectStage, skip(pageNumber * pageSize), limit(pageSize)
+        }
+
+        if ( filters == null && fields == null ) {
+            //do some thing when nothing passed
+        }
+        AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
+        return result.getMappedResults();
     }
 
-        /**
+    /**
      * @param customerList
      * @param requestedPage
      * @param offset
