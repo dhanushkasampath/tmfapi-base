@@ -59,23 +59,23 @@ public class CustomerControllerNew extends BaseController {
         return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
-    @GetMapping( value = "",
+    @GetMapping( value = "/{offset}/{limit}",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity queryAllCustomers(
             @RequestParam( required = false )
                     Map < String, String > filters,
             @RequestParam( required = false )
                     String fields,
-            @RequestParam( value = "offset",
+            @PathVariable( value = "offset",
                     required = true )
                     String offset,
-            @RequestParam( value = "limit",
+            @PathVariable( value = "limit",
                     required = true )
                     String limit, HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query all customers|offset:{}|limit:{}", offset, limit);
         }
-        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(filters, fields, offset, limit);
+        QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(filters, fields, Integer.parseInt(offset), Integer.parseInt(limit));
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying all customers|:{}", mapObjToString(queryAllCustomerRespDto));
         }

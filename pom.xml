@@ -54,7 +54,6 @@
 	</dependencies>
 	<modules>
 		<module>tmfapi-datamodel</module>
-		<module>tmfapi-productordering</module>
 		<module>common-config</module>
 		<module>tmfapi-customermanagement</module>
 	</modules>

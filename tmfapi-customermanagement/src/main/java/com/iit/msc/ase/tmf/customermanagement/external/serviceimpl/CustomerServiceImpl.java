@@ -43,13 +43,21 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -109,19 +117,19 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, String offset, String limit) {
+    public QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit) {
         log("queryAll method of Customer started");
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        Pageable requestedPage = PageRequest.of(Integer.parseInt(offset) - 1, Integer.parseInt(limit));
-        List < Customer > customerList;
-        if(filters != null){
-            customerList = customerRepository.findByFilters(requestedPage);
-        }else {
-            customerList = customerRepository.findAll();
+        Pageable requestedPage = PageRequest.of(offset - 1, limit);
+        Page < Customer > customerList;
+        if ( filters != null ) {
+            customerList = findByFilters(filters, requestedPage, offset, limit);
+        } else {
+            customerList = customerRepository.findAll(requestedPage);
         }
         if ( !customerList.isEmpty() ) {
-            queryAllCustomerRespDto.setResponseData(customerList);
+            queryAllCustomerRespDto.setResponseData(customerList.getContent());
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
             responseHeaderDto.setResponseDesc("Operation successful");
@@ -136,6 +144,38 @@ public class CustomerServiceImpl implements CustomerService {
         queryAllCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("queryAll method of Customer ended");
         return queryAllCustomerRespDto;
+    }
+
+    /**
+     * @param filters
+     * @param requestedPage
+     * @param offset
+     * @param limit
+     * @return
+     */
+    private Page < Customer > findByFilters(Map < String, String > filters, Pageable requestedPage, Integer offset, Integer limit) {
+        log("findByFilters method started");
+        Query dynamicQuery = new Query();
+        for ( Map.Entry < String, String > entry : filters.entrySet() ) {
+            Criteria dynamicCriteria = Criteria.where(entry.getKey()).is(entry.getValue());
+            dynamicQuery.addCriteria(dynamicCriteria);
+        }
+        List < Customer > customerList = mongoTemplate.find(dynamicQuery, Customer.class, "customer");
+        return getPage(customerList, requestedPage, offset, limit);
+    }
+
+        /**
+     * @param customerList
+     * @param requestedPage
+     * @param offset
+     * @param limit
+     * @return
+     */
+    private Page < Customer > getPage(List < Customer > customerList, Pageable requestedPage, Integer offset, Integer limit) {
+        int totalPages = customerList.size() / limit;
+        int max = offset >= totalPages ? customerList.size() : limit * (offset + 1);
+        int min = offset > totalPages ? max : limit * offset;
+        return new PageImpl <>(customerList.subList(min, max), requestedPage, customerList.size());
     }
 
     @Override
@@ -175,7 +215,7 @@ public class CustomerServiceImpl implements CustomerService {
         for ( EngagedPartyDto engagedPartyDto : engagedPartyDtoList ) {
             if ( engagedPartyDto.getId() == null ) {
                 engagedPartyList.add(engagedPartyService.create(getModelMapper().map(engagedPartyDto, EngagedParty.class)));
-            }else{
+            } else {
                 //find by @id
                 EngagedParty existingEngagedParty = engagedPartyService.findById(engagedPartyDto.getId());
                 if ( existingEngagedParty != null ) {
@@ -233,9 +273,9 @@ public class CustomerServiceImpl implements CustomerService {
         List < PaymentRefDto > paymentRefDtoList = customerDto.getPaymentMethod();
         List < PaymentRef > paymentRefList = new ArrayList <>();
         for ( PaymentRefDto paymentRefDto : paymentRefDtoList ) {
-            if(paymentRefDto.getId() == null){
+            if ( paymentRefDto.getId() == null ) {
                 paymentRefList.add(paymentRefService.create(getModelMapper().map(paymentRefDto, PaymentRef.class)));
-            }else{
+            } else {
                 //find by @referredType
                 PaymentRef existingPaymentRef = paymentRefService.findById(paymentRefDto.getId());
                 if ( existingPaymentRef != null ) {
@@ -315,9 +355,9 @@ public class CustomerServiceImpl implements CustomerService {
         List < RelatedPartyDto > relatedPartyDtoList = customerDto.getRelatedParty();
         List < RelatedParty > relatedPartyList = new ArrayList <>();
         for ( RelatedPartyDto relatedPartyDto : relatedPartyDtoList ) {
-            if(relatedPartyDto.getId() == null){
+            if ( relatedPartyDto.getId() == null ) {
                 relatedPartyList.add(relatedPartyRefService.create(getModelMapper().map(relatedPartyDto, RelatedParty.class)));
-            }else{
+            } else {
                 //find by id
                 RelatedParty existingRelatedParty = relatedPartyRefService.findById(relatedPartyDto.getId());
                 if ( existingRelatedParty != null ) {
