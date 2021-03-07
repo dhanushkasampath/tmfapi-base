@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AccountRefService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AgreementRefService;
@@ -45,6 +47,7 @@ import com.iit.msc.ase.tmf.datamodel.domain.dto.RelatedPartyDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -58,8 +61,14 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.limit;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.skip;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
+    @Value( "${validation.regex.offset}" )
+    private String validationRegexOffset;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -122,8 +131,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit) {
+    public QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit) throws CustomerMgtException {
         log("queryAll method of Customer started");
+        validateOffset(offset);
+        validateLimit(limit);
         QueryAllCustomerRespDto queryAllCustomerRespDto = new QueryAllCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Pageable requestedPage = PageRequest.of(offset - 1, limit);
@@ -145,6 +156,28 @@ public class CustomerServiceImpl implements CustomerService {
         queryAllCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("queryAll method of Customer ended");
         return queryAllCustomerRespDto;
+    }
+
+    /**
+     * @param limit
+     * @throws CustomerMgtException
+     */
+    private void validateLimit(Integer limit) throws CustomerMgtException {
+        if ( !Pattern.matches(validationRegexOffset, limit.toString()) || limit <= 0 ) {
+            logger.error("Invalid limit:{}", limit);
+            throw new CustomerMgtException(String.format("Invalid limit:%s", limit), Constants.CXM2002);
+        }
+    }
+
+    /**
+     * @param offset
+     * @throws CustomerMgtException
+     */
+    private void validateOffset(Integer offset) throws CustomerMgtException {
+        if ( !Pattern.matches(validationRegexOffset, offset.toString()) || offset <= 0 ) {
+            logger.error("Invalid offset:{}", offset);
+            throw new CustomerMgtException(String.format("Invalid offset:%s", offset), Constants.CXM2001);
+        }
     }
 
     /**
@@ -179,7 +212,7 @@ public class CustomerServiceImpl implements CustomerService {
             projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));
         }
 
-        if ( !filters.isEmpty()) {
+        if ( !filters.isEmpty() ) {
             aggregation = Aggregation.newAggregation(matchStage);
         }
 
@@ -188,13 +221,18 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if ( !filters.isEmpty() && fields != null ) {
-            aggregation = Aggregation.newAggregation(matchStage, projectStage);//, projectStage, skip(pageNumber * pageSize), limit(pageSize)
+            if ( pageNumber.equals(1) ) {
+                aggregation = Aggregation.newAggregation(matchStage, projectStage, limit(pageSize));
+            } else {
+                aggregation = Aggregation.newAggregation(matchStage, projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize));//, projectStage, skip(pageNumber * pageSize), limit(pageSize)
+            }
         }
 
         if ( filters.isEmpty() && fields == null ) {
             log("findByFilters method ended");
             return customerRepository.findAll(requestedPage).getContent();
         }
+
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
         log("findByFilters method ended");
         return result.getMappedResults();

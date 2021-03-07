@@ -2,6 +2,7 @@ package com.iit.msc.ase.tmf.customermanagement.domain.boundary.service;
 
 import java.util.Map;
 
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
@@ -12,7 +13,7 @@ public interface CustomerService extends CommonService {
 
     CreateCustomerRespDto create(CreateCustomerReqDto createCustomerReqDto);
 
-    QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit);
+    QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit) throws CustomerMgtException;
 
     QueryCustomerByIdRespDto queryById(String id);
 

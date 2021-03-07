@@ -73,7 +73,7 @@ public class CustomerControllerNew extends BaseController {
                     required = true )
                     String limit, HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
-            logger.info("Received request to query all customers|offset:{}|limit:{}", offset, limit);
+            logger.info("Received request to query all customers|fields:{}|filters:{}|offset:{}|limit:{}", fields, filters, offset, limit);
         }
         QueryAllCustomerRespDto queryAllCustomerRespDto = customerService.queryAll(filters, fields, Integer.parseInt(offset), Integer.parseInt(limit));
         if ( logger.isInfoEnabled() ) {

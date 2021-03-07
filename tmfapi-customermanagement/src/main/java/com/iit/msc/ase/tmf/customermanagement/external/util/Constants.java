@@ -15,6 +15,8 @@ public class Constants {
     public static final String CXM1000 = "CXM1000";//Success
 
     public static final String CXM2000 = "CXM2000";//no customer record found by id
+    public static final String CXM2001 = "CXM2001";//Invalid offset:{}
+    public static final String CXM2002 = "CXM2002";//Invalid limit:{}
 
     public static final String OFFSET_KEY = "offset";
     public static final String LIMIT_KEY = "limit";

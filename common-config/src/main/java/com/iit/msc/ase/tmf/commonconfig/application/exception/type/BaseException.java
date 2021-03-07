@@ -1,21 +1,28 @@
 package com.iit.msc.ase.tmf.commonconfig.application.exception.type;
 
-import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@Data
-public class BaseException extends Exception {
+@ResponseStatus( HttpStatus.INTERNAL_SERVER_ERROR)
+public class BaseException extends Exception{
     private String code;
-    private HttpStatus status;
-    private String reason;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public BaseException(String message) {
+
         super(message);
     }
 
-    public BaseException(String message, String reason, String code, HttpStatus status) {
+    public BaseException(String message, String code) {
+
         super(message);
         this.code = code;
-        this.status = status;
-        this.reason = reason;
     }
 }
