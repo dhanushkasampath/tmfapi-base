@@ -160,7 +160,7 @@ public class CustomerServiceImpl implements CustomerService {
         MatchOperation matchStage = null;
         ProjectionOperation projectStage = null;
         Aggregation aggregation = null;
-        if ( filters != null ) {
+        if ( !filters.isEmpty() ) {
             if ( fields != null ) {
                 filters.remove("fields");
             }
@@ -177,7 +177,7 @@ public class CustomerServiceImpl implements CustomerService {
             projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));
         }
 
-        if ( filters != null ) {
+        if ( !filters.isEmpty()) {
             aggregation = Aggregation.newAggregation(matchStage);
         }
 
@@ -185,11 +185,11 @@ public class CustomerServiceImpl implements CustomerService {
             aggregation = Aggregation.newAggregation(projectStage);
         }
 
-        if ( filters != null && fields != null ) {
+        if ( !filters.isEmpty() && fields != null ) {
             aggregation = Aggregation.newAggregation(matchStage, projectStage);//, projectStage, skip(pageNumber * pageSize), limit(pageSize)
         }
 
-        if ( filters == null && fields == null ) {
+        if ( filters.isEmpty() && fields == null ) {
             return customerRepository.findAll(requestedPage).getContent();
         }
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
