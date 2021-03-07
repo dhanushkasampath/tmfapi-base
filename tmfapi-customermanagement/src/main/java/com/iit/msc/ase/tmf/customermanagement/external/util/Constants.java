@@ -12,6 +12,8 @@ public class Constants {
         //This class facilitate constants
     }
 
+    public static final String OPERATION_SUCCESSFUL = "Operation Successful";//Success
+
     public static final String CXM1000 = "CXM1000";//Success
 
     public static final String CXM2000 = "CXM2000";//no customer record found by id

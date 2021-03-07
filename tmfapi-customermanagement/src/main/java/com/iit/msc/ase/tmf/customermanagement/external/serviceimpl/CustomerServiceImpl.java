@@ -120,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer createdCustomer = customerRepository.save(customer);
         if ( createdCustomer != null ) {
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc("Operation successful");
+            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
         }
 
@@ -145,7 +145,7 @@ public class CustomerServiceImpl implements CustomerService {
             queryAllCustomerRespDto.setResponseData(customerList);
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc("Operation successful");
+            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
         } else {
             responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
@@ -256,7 +256,7 @@ public class CustomerServiceImpl implements CustomerService {
             queryCustomerByIdRespDto.setResponseData(customer.get());
             responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc("Operation successful");
+            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
         } else {
             responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
