@@ -128,11 +128,6 @@ public class CustomerServiceImpl implements CustomerService {
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Pageable requestedPage = PageRequest.of(offset - 1, limit);
         List < Customer > customerList;
-//        if ( filters != null ) {
-//            customerList = findByFilters(filters, requestedPage, offset, limit);
-//        } else {
-//            //customerList = customerRepository.findAll(requestedPage);
-//        }
         customerList = findByFilters(filters, fields, requestedPage, offset, limit);
         if ( !customerList.isEmpty() ) {
             queryAllCustomerRespDto.setResponseData(customerList);
@@ -169,12 +164,12 @@ public class CustomerServiceImpl implements CustomerService {
             if ( fields != null ) {
                 filters.remove("fields");
             }
-            List < Criteria > criterias = new ArrayList <>();
+            List < Criteria > criteriaList = new ArrayList <>();
             for ( Map.Entry < String, String > entry : filters.entrySet() ) {
                 Criteria criteria = Criteria.where(entry.getKey()).in(entry.getValue());
-                criterias.add(criteria);
+                criteriaList.add(criteria);
             }
-            matchStage = new MatchOperation(!criterias.isEmpty() ? new Criteria().andOperator(criterias.toArray(new Criteria[ criterias.size() ])) : new Criteria());
+            matchStage = new MatchOperation(!criteriaList.isEmpty() ? new Criteria().andOperator(criteriaList.toArray(new Criteria[ criteriaList.size() ])) : new Criteria());
         }
         if ( fields != null ) {
             List < String > requiredFieldList = Stream.of(fields.split(",", -1)).collect(Collectors.toList());
@@ -195,7 +190,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if ( filters == null && fields == null ) {
-            //do some thing when nothing passed
+            return customerRepository.findAll(requestedPage).getContent();
         }
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
         return result.getMappedResults();
