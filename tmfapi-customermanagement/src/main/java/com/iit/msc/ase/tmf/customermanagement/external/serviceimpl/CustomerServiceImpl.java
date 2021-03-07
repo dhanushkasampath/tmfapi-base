@@ -161,8 +161,10 @@ public class CustomerServiceImpl implements CustomerService {
         ProjectionOperation projectStage = null;
         Aggregation aggregation = null;
         if ( !filters.isEmpty() ) {
+            filters.remove(Constants.OFFSET_KEY);
+            filters.remove(Constants.LIMIT_KEY);
             if ( fields != null ) {
-                filters.remove("fields");
+                filters.remove(Constants.FIELDS_KEY);
             }
             List < Criteria > criteriaList = new ArrayList <>();
             for ( Map.Entry < String, String > entry : filters.entrySet() ) {
@@ -190,9 +192,11 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if ( filters.isEmpty() && fields == null ) {
+            log("findByFilters method ended");
             return customerRepository.findAll(requestedPage).getContent();
         }
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
+        log("findByFilters method ended");
         return result.getMappedResults();
     }
 

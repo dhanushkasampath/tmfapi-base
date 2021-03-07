@@ -16,4 +16,8 @@ public class Constants {
 
     public static final String CXM2000 = "CXM2000";//no customer record found by id
 
+    public static final String OFFSET_KEY = "offset";
+    public static final String LIMIT_KEY = "limit";
+    public static final String FIELDS_KEY = "fields";
+
 }

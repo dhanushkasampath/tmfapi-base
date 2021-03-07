@@ -59,17 +59,17 @@ public class CustomerControllerNew extends BaseController {
         return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
-    @GetMapping( value = "/{offset}/{limit}",
+    @GetMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity queryAllCustomers(
             @RequestParam( required = false )
                     Map < String, String > filters,
             @RequestParam( required = false )
                     String fields,
-            @PathVariable( value = "offset",
+            @RequestParam( value = "offset",
                     required = true )
                     String offset,
-            @PathVariable( value = "limit",
+            @RequestParam( value = "limit",
                     required = true )
                     String limit, HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
