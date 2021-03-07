@@ -403,7 +403,7 @@ public class CustomerServiceImpl implements CustomerService {
                 accountRefList.add(accountRefService.create(getModelMapper().map(accountRefDto, AccountRef.class)));
             } else {
                 //find by id
-                AccountRef existingAccountRef = accountRefService.findById(accountRefDto.getReferredType());
+                AccountRef existingAccountRef = accountRefService.findById(accountRefDto.getId());
                 if ( existingAccountRef != null ) {
                     accountRefList.add(existingAccountRef);
                 } else {
