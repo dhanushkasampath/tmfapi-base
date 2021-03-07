@@ -48,8 +48,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -211,16 +209,23 @@ public class CustomerServiceImpl implements CustomerService {
         }
         if ( fields != null ) {
             List < String > requiredFieldList = Stream.of(fields.split(",", -1)).collect(Collectors.toList());
-//            projectStage = Aggregation.project("href", "status");//at lease 1 param should be there
-            projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));
+            projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));//projectStage = Aggregation.project("href", "status");//at lease 1 param should be there
         }
 
         if ( !filters.isEmpty() ) {
-            aggregation = Aggregation.newAggregation(matchStage);
+            if ( pageNumber.equals(1) ) {
+                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize));//no need to pass skip param if you need the first page
+            } else {
+                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize));
+            }
         }
 
         if ( fields != null ) {
-            aggregation = Aggregation.newAggregation(projectStage);
+            if ( pageNumber.equals(1) ) {
+                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize));
+            } else {
+                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize));
+            }
         }
 
         if ( !filters.isEmpty() && fields != null ) {
@@ -239,20 +244,6 @@ public class CustomerServiceImpl implements CustomerService {
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
         log("findByFilters method ended");
         return result.getMappedResults();
-    }
-
-    /**
-     * @param customerList
-     * @param requestedPage
-     * @param offset
-     * @param limit
-     * @return
-     */
-    private Page < Customer > getPage(List < Customer > customerList, Pageable requestedPage, Integer offset, Integer limit) {
-        int totalPages = customerList.size() / limit;
-        int max = offset >= totalPages ? customerList.size() : limit * (offset + 1);
-        int min = offset > totalPages ? max : limit * offset;
-        return new PageImpl <>(customerList.subList(min, max), requestedPage, customerList.size());
     }
 
     @Override
@@ -283,7 +274,6 @@ public class CustomerServiceImpl implements CustomerService {
         log("deleteById method of Customer started|id:{}", id);
         customerRepository.deleteById(id);
         log("deleteById method of Customer ended");
-
     }
 
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {

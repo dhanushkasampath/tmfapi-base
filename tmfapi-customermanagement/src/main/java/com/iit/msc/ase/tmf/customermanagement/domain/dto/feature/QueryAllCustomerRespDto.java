@@ -19,6 +19,5 @@ public class QueryAllCustomerRespDto {
 
     private ResponseHeaderDto responseHeader;
     private Object responseData;
-
 }
 
