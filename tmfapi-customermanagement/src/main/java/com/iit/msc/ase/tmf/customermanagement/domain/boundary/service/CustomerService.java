@@ -22,7 +22,7 @@ public interface CustomerService extends CommonService {
 
     void deleteById(String id);
 
-    UpdateCustomerRespDto update(UpdateCustomerReqDto updateCustomerReqDto);
+    UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto);
 
     Customer findById(String id);
 }

@@ -122,16 +122,19 @@ public class CustomerControllerNew extends BaseController {
         return new ResponseEntity <>(null, HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping( value = "",
+    @PutMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity updateCustomer(
+            @PathVariable( name = "id",
+                    required = true )
+                    String id,
             @Valid
             @RequestBody( required = true )
                     UpdateCustomerReqDto updateCustomerReqDto, HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
-            logger.info("Received request to update customer:{}", mapObjToString(updateCustomerReqDto));
+            logger.info("Received request to update customer|id:{}|updateCustomerReqDto:{}", id, mapObjToString(updateCustomerReqDto));
         }
-        UpdateCustomerRespDto updateCustomerRespDto = customerService.update(updateCustomerReqDto);
+        UpdateCustomerRespDto updateCustomerRespDto = customerService.update(id, updateCustomerReqDto);
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after updating a customer|updateCustomerRespDto:{}", mapObjToString(updateCustomerRespDto));
         }

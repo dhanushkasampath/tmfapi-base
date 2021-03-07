@@ -280,9 +280,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public UpdateCustomerRespDto update(UpdateCustomerReqDto updateCustomerReqDto) {
+    public UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto) {
         log("update method of Customer started");
-        Customer customer = findById(updateCustomerReqDto.getCustomer().getId());
+        Customer customer = findById(id);
         customer.setStatus(updateCustomerReqDto.getCustomer().getStatus());
         customer.setType(updateCustomerReqDto.getCustomer().getType());
         customer.setStatusReason(updateCustomerReqDto.getCustomer().getStatusReason());
