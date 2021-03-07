@@ -120,12 +120,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        Customer createdCustomer = customerRepository.save(customer);
-        if ( createdCustomer != null ) {
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
-            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
-        }
+        customerRepository.save(customer);
+        responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+        responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
+        responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
 
         responseHeaderDto.setRequestId(createCustomerReqDto.getRequestHeader().getRequestId());
         responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
@@ -154,12 +152,83 @@ public class CustomerServiceImpl implements CustomerService {
             responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
             responseHeaderDto.setResponseDesc("No records found");
         }
-
         responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
         responseHeaderDto.setRequestId("123");
         queryAllCustomerRespDto.setResponseHeader(responseHeaderDto);
         log("queryAll method of Customer ended");
         return queryAllCustomerRespDto;
+    }
+
+    @Override
+    public QueryCustomerByIdRespDto queryById(String id) {
+        log("queryById method of Customer started|id:{}", id);
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = new QueryCustomerByIdRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        Optional < Customer > customer = customerRepository.findById(id);
+        if ( customer.isPresent() ) {
+            queryCustomerByIdRespDto.setResponseData(customer.get());
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
+        } else {
+            responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
+            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+            responseHeaderDto.setResponseDesc("Customer not found");
+        }
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        responseHeaderDto.setRequestId("123");
+        queryCustomerByIdRespDto.setResponseHeader(responseHeaderDto);
+        log("queryById method of Customer ended");
+        return queryCustomerByIdRespDto;
+    }
+
+    @Override
+    public void deleteById(String id) {
+        log("deleteById method of Customer started|id:{}", id);
+        customerRepository.deleteById(id);
+        log("deleteById method of Customer ended");
+    }
+
+    @Override
+    public UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto) {
+        log("update method of Customer started");
+        Customer customer = findById(id);
+        customer.setStatus(updateCustomerReqDto.getCustomer().getStatus());
+        customer.setType(updateCustomerReqDto.getCustomer().getType());
+        customer.setStatusReason(updateCustomerReqDto.getCustomer().getStatusReason());
+        customer.setBaseType(updateCustomerReqDto.getCustomer().getBaseType());
+        customer.setName(updateCustomerReqDto.getCustomer().getName());
+        customer.setSchemaLocation(updateCustomerReqDto.getCustomer().getSchemaLocation());
+        customer.setValidFor(getModelMapper().map(updateCustomerReqDto.getCustomer().getValidFor(), TimePeriod.class));
+
+        customer.setAccount(getAccountRefsList(updateCustomerReqDto.getCustomer()));
+        customer.setAgreement(getAgreementRefsList(updateCustomerReqDto.getCustomer()));
+        customer.setCharacteristic(getCharacteristicsList(updateCustomerReqDto.getCustomer()));
+        customer.setPaymentMethod(getPaymentMethodList(updateCustomerReqDto.getCustomer()));
+        customer.setRelatedParty(getRelatedPartiesList(updateCustomerReqDto.getCustomer()));
+        customer.setCreditProfile(getCreditProfileList(updateCustomerReqDto.getCustomer()));
+        customer.setContactMedium(getContactMediumList(updateCustomerReqDto.getCustomer()));
+        customer.setEngagedParty(getEngagedPartyList(updateCustomerReqDto.getCustomer()));
+
+        UpdateCustomerRespDto updateCustomerRespDto = new UpdateCustomerRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        customerRepository.save(customer);
+        responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+        responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
+        responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+
+        responseHeaderDto.setRequestId(updateCustomerReqDto.getRequestHeader().getRequestId());
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        updateCustomerRespDto.setResponseHeader(responseHeaderDto);
+        log("create method of Customer ended");
+        return updateCustomerRespDto;
+    }
+
+    @Override
+    public Customer findById(String id) {
+        log("findByReferredType method of EngagedParty started");
+        Optional < Customer > customerOptional = customerRepository.findById(id);
+        return customerOptional.orElse(null);
     }
 
     /**
@@ -247,71 +316,6 @@ public class CustomerServiceImpl implements CustomerService {
         AggregationResults < Customer > result = mongoTemplate.aggregate(aggregation, "customer", Customer.class);
         log("findByFilters method ended");
         return result.getMappedResults();
-    }
-
-    @Override
-    public QueryCustomerByIdRespDto queryById(String id) {
-        log("queryById method of Customer started|id:{}", id);
-        QueryCustomerByIdRespDto queryCustomerByIdRespDto = new QueryCustomerByIdRespDto();
-        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        Optional < Customer > customer = customerRepository.findById(id);
-        if ( customer.isPresent() ) {
-            queryCustomerByIdRespDto.setResponseData(customer.get());
-            responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-            responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
-        } else {
-            responseHeaderDto.setResponseDescDisplay(Constants.CXM2000);
-            responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.BAD_REQUEST.value()));
-            responseHeaderDto.setResponseDesc("Customer not found");
-        }
-        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
-        responseHeaderDto.setRequestId("123");
-        queryCustomerByIdRespDto.setResponseHeader(responseHeaderDto);
-        log("queryById method of Customer ended");
-        return queryCustomerByIdRespDto;
-    }
-
-    @Override
-    public void deleteById(String id) {
-        log("deleteById method of Customer started|id:{}", id);
-        customerRepository.deleteById(id);
-        log("deleteById method of Customer ended");
-    }
-
-    @Override
-    public UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto) {
-        log("update method of Customer started");
-        Customer customer = findById(id);
-        customer.setStatus(updateCustomerReqDto.getCustomer().getStatus());
-        customer.setType(updateCustomerReqDto.getCustomer().getType());
-        customer.setStatusReason(updateCustomerReqDto.getCustomer().getStatusReason());
-        customer.setBaseType(updateCustomerReqDto.getCustomer().getBaseType());
-        customer.setName(updateCustomerReqDto.getCustomer().getName());
-        customer.setSchemaLocation(updateCustomerReqDto.getCustomer().getSchemaLocation());
-        customer.setValidFor(getModelMapper().map(updateCustomerReqDto.getCustomer().getValidFor(), TimePeriod.class));
-
-        customer.setAccount(getAccountRefsList(updateCustomerReqDto.getCustomer()));
-        customer.setAgreement(getAgreementRefsList(updateCustomerReqDto.getCustomer()));
-        customer.setCharacteristic(getCharacteristicsList(updateCustomerReqDto.getCustomer()));
-        customer.setPaymentMethod(getPaymentMethodList(updateCustomerReqDto.getCustomer()));
-        customer.setRelatedParty(getRelatedPartiesList(updateCustomerReqDto.getCustomer()));
-        customer.setCreditProfile(getCreditProfileList(updateCustomerReqDto.getCustomer()));
-        customer.setContactMedium(getContactMediumList(updateCustomerReqDto.getCustomer()));
-        customer.setEngagedParty(getEngagedPartyList(updateCustomerReqDto.getCustomer()));
-
-        UpdateCustomerRespDto updateCustomerRespDto = new UpdateCustomerRespDto();
-        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        customerRepository.save(customer);
-        responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
-        responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
-        responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
-
-        responseHeaderDto.setRequestId(updateCustomerReqDto.getRequestHeader().getRequestId());
-        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
-        updateCustomerRespDto.setResponseHeader(responseHeaderDto);
-        log("create method of Customer ended");
-        return updateCustomerRespDto;
     }
 
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {
@@ -482,10 +486,4 @@ public class CustomerServiceImpl implements CustomerService {
         return modelMapper;
     }
 
-    @Override
-    public Customer findById(String id) {
-        log("findByReferredType method of EngagedParty started");
-        Optional < Customer > customerOptional = customerRepository.findById(id);
-        return customerOptional.orElse(null);
-    }
 }
