@@ -70,6 +70,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Value( "${validation.regex.offset}" )
     private String validationRegexOffset;
 
+    @Value( "${validation.regex.limit}" )
+    private String validationRegexLimit;
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -163,7 +166,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @throws CustomerMgtException
      */
     private void validateLimit(Integer limit) throws CustomerMgtException {
-        if ( !Pattern.matches(validationRegexOffset, limit.toString()) || limit <= 0 ) {
+        if ( !Pattern.matches(validationRegexLimit, limit.toString()) || limit <= 0 ) {
             logger.error("Invalid limit:{}", limit);
             throw new CustomerMgtException(String.format("Invalid limit:%s", limit), Constants.CXM2002);
         }

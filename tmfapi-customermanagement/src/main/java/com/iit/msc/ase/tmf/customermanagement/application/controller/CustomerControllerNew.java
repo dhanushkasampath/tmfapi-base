@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
@@ -71,7 +72,7 @@ public class CustomerControllerNew extends BaseController {
                     String offset,
             @RequestParam( value = "limit",
                     required = true )
-                    String limit, HttpServletRequest request) {
+                    String limit, HttpServletRequest request) throws CustomerMgtException {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query all customers|fields:{}|filters:{}|offset:{}|limit:{}", fields, filters, offset, limit);
         }
