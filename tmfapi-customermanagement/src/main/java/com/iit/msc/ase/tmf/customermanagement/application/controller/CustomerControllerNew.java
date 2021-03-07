@@ -12,6 +12,8 @@ import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerR
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,6 +120,22 @@ public class CustomerControllerNew extends BaseController {
             logger.info("Return response after deleting customer by id:{}", id);
         }
         return new ResponseEntity <>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping( value = "",
+            produces = MediaType.APPLICATION_JSON_VALUE )
+    public ResponseEntity updateCustomer(
+            @Valid
+            @RequestBody( required = true )
+                    UpdateCustomerReqDto updateCustomerReqDto, HttpServletRequest request) {
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Received request to update customer:{}", mapObjToString(updateCustomerReqDto));
+        }
+        UpdateCustomerRespDto updateCustomerRespDto = customerService.update(updateCustomerReqDto);
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Return response after updating a customer|updateCustomerRespDto:{}", mapObjToString(updateCustomerRespDto));
+        }
+        return new ResponseEntity <>(updateCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(updateCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
 }

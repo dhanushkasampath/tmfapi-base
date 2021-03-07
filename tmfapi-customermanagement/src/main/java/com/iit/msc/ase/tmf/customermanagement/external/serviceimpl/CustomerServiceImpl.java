@@ -24,6 +24,8 @@ import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerR
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.headers.ResponseHeaderDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.AgreementRef;
@@ -34,6 +36,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.EngagedParty;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.RelatedParty;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.TimePeriod;
 import com.iit.msc.ase.tmf.customermanagement.external.util.Constants;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AccountRefDto;
 import com.iit.msc.ase.tmf.datamodel.domain.dto.AgreementRefDto;
@@ -276,6 +279,41 @@ public class CustomerServiceImpl implements CustomerService {
         log("deleteById method of Customer ended");
     }
 
+    @Override
+    public UpdateCustomerRespDto update(UpdateCustomerReqDto updateCustomerReqDto) {
+        log("update method of Customer started");
+        Customer customer = findById(updateCustomerReqDto.getCustomer().getId());
+        customer.setStatus(updateCustomerReqDto.getCustomer().getStatus());
+        customer.setType(updateCustomerReqDto.getCustomer().getType());
+        customer.setStatusReason(updateCustomerReqDto.getCustomer().getStatusReason());
+        customer.setBaseType(updateCustomerReqDto.getCustomer().getBaseType());
+        customer.setName(updateCustomerReqDto.getCustomer().getName());
+        customer.setSchemaLocation(updateCustomerReqDto.getCustomer().getSchemaLocation());
+        customer.setValidFor(getModelMapper().map(updateCustomerReqDto.getCustomer().getValidFor(), TimePeriod.class));
+
+        customer.setAccount(getAccountRefsList(updateCustomerReqDto.getCustomer()));
+        customer.setAgreement(getAgreementRefsList(updateCustomerReqDto.getCustomer()));
+        customer.setCharacteristic(getCharacteristicsList(updateCustomerReqDto.getCustomer()));
+        customer.setPaymentMethod(getPaymentMethodList(updateCustomerReqDto.getCustomer()));
+        customer.setRelatedParty(getRelatedPartiesList(updateCustomerReqDto.getCustomer()));
+        customer.setCreditProfile(getCreditProfileList(updateCustomerReqDto.getCustomer()));
+        customer.setContactMedium(getContactMediumList(updateCustomerReqDto.getCustomer()));
+        customer.setEngagedParty(getEngagedPartyList(updateCustomerReqDto.getCustomer()));
+
+        UpdateCustomerRespDto updateCustomerRespDto = new UpdateCustomerRespDto();
+        ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
+        customerRepository.save(customer);
+        responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
+        responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
+        responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
+
+        responseHeaderDto.setRequestId(updateCustomerReqDto.getRequestHeader().getRequestId());
+        responseHeaderDto.setTimestamp(LocalDateTime.now().toString());
+        updateCustomerRespDto.setResponseHeader(responseHeaderDto);
+        log("create method of Customer ended");
+        return updateCustomerRespDto;
+    }
+
     private List < EngagedParty > getEngagedPartyList(CustomerDto customerDto) {
         List < EngagedPartyDto > engagedPartyDtoList = customerDto.getEngagedParty();
         List < EngagedParty > engagedPartyList = new ArrayList <>();
@@ -444,4 +482,10 @@ public class CustomerServiceImpl implements CustomerService {
         return modelMapper;
     }
 
+    @Override
+    public Customer findById(String id) {
+        log("findByReferredType method of EngagedParty started");
+        Optional < Customer > customerOptional = customerRepository.findById(id);
+        return customerOptional.orElse(null);
+    }
 }

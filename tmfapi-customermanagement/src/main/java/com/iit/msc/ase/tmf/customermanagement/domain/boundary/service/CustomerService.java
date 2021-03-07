@@ -7,6 +7,9 @@ import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerR
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.service.CommonService;
 
 public interface CustomerService extends CommonService {
@@ -19,4 +22,7 @@ public interface CustomerService extends CommonService {
 
     void deleteById(String id);
 
+    UpdateCustomerRespDto update(UpdateCustomerReqDto updateCustomerReqDto);
+
+    Customer findById(String id);
 }
