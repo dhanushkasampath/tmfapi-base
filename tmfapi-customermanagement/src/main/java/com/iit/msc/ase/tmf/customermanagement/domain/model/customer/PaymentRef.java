@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document( collection = "account_ref" )
-public class AccountRef {
+@Document(collection = "payment_ref")
+public class PaymentRef {
 
     @Id
     private String id;
@@ -28,8 +28,6 @@ public class AccountRef {
     private String baseType;
     private String type;
     private String name;
-    private String description;
     private String href;
     private String schemaLocation;
-
 }

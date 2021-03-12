@@ -1,6 +1,6 @@
 package com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository;
 
-import com.iit.msc.ase.tmf.customermanagement.domain.model.MediumCharacteristic;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.MediumCharacteristic;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

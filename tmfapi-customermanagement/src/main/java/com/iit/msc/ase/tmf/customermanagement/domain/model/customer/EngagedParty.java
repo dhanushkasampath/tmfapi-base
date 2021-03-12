@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "related_party")
-public class RelatedParty {
+@Document(collection = "engaged_party")
+public class EngagedParty {
 
     @Id
     private String id;
@@ -24,11 +24,11 @@ public class RelatedParty {
     private String parentId;
     private String immediateParent;
     private String immediateParentId;
-    private String name;
-    private String href;
-    private String role;
     private String referredType;
+    private String role;
     private String baseType;
     private String type;
+    private String name;
+    private String href;
     private String schemaLocation;
 }

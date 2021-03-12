@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.EngagedPartyRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.EngagedPartyService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.EngagedParty;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.EngagedParty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

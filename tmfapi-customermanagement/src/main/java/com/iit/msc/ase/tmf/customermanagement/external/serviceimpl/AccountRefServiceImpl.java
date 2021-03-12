@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.AccountRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.AccountRefService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.AccountRef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

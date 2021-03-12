@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "contact_medium")
-public class ContactMedium {
+@Document(collection = "credit_profile")
+public class CreditProfile {
 
     private String id;
     private long primaryId;
@@ -22,11 +22,11 @@ public class ContactMedium {
     private String parentId;
     private String immediateParent;
     private String immediateParentId;
-    private String mediumType;
-    private boolean preferred;
-    private TimePeriod validFor;
-    private MediumCharacteristic characteristic;
+    private String creditProfileDate;
+    private int creditScore;
     private String baseType;
-    private String referredType;
+    private TimePeriod validFor;
+    private String type;
+    private int creditRiskRating;
     private String schemaLocation;
 }

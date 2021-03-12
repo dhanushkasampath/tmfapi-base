@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CreditProfileRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CreditProfileService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.CreditProfile;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.CreditProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

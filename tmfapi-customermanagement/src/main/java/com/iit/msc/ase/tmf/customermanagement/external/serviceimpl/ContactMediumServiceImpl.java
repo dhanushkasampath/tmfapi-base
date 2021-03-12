@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.ContactMediumRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.ContactMediumService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.ContactMedium;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.ContactMedium;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

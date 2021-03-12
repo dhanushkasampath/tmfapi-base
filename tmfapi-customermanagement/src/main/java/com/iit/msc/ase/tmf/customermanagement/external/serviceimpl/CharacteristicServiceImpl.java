@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CharacteristicRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CharacteristicService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.Characteristic;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.Characteristic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

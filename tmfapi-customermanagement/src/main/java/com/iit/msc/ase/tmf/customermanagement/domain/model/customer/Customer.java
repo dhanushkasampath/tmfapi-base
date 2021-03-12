@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import java.util.List;
 

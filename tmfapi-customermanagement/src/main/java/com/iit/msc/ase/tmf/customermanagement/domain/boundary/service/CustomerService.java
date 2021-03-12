@@ -9,7 +9,7 @@ import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustome
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.Customer;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.Customer;
 import com.iit.msc.ase.tmf.customermanagement.domain.service.CommonService;
 
 public interface CustomerService extends CommonService {

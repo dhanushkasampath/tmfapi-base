@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +13,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "characteristic")
-public class Characteristic {
+@Document(collection = "contact_medium")
+public class ContactMedium {
 
-    private String id;//added by me
+    private String id;
     private long primaryId;
     private String parentEntity;
     private String parentId;
     private String immediateParent;
     private String immediateParentId;
+    private String mediumType;
+    private boolean preferred;
+    private TimePeriod validFor;
+    private MediumCharacteristic characteristic;
     private String baseType;
-    private String type;
-    private String valueType;
-    private String value;
-    private String name;
+    private String referredType;
     private String schemaLocation;
 }

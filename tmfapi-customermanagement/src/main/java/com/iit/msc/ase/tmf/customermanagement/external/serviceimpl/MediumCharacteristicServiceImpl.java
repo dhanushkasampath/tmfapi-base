@@ -2,7 +2,7 @@ package com.iit.msc.ase.tmf.customermanagement.external.serviceimpl;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.MediumCharacteristicRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.MediumCharacteristicService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.MediumCharacteristic;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.MediumCharacteristic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository;
 
 import java.util.List;
 
-import com.iit.msc.ase.tmf.customermanagement.domain.model.AccountRef;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.AccountRef;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

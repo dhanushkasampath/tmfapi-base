@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.PaymentRefRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.PaymentRefService;
-import com.iit.msc.ase.tmf.customermanagement.domain.model.PaymentRef;
+import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.PaymentRef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

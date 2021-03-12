@@ -1,4 +1,4 @@
-package com.iit.msc.ase.tmf.customermanagement.domain.model;
+package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,14 +14,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "time_period")
-public class TimePeriod {
+@Document(collection = "related_party")
+public class RelatedParty {
 
+    @Id
+    private String id;
     private long primaryId;
     private String parentEntity;
     private String parentId;
     private String immediateParent;
     private String immediateParentId;
-    private String startDateTime;
-    private String endDateTime;
+    private String name;
+    private String href;
+    private String role;
+    private String referredType;
+    private String baseType;
+    private String type;
+    private String schemaLocation;
 }
