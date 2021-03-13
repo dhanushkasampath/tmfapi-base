@@ -122,15 +122,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setContactMedium(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getContactMedium(), ContactMedium[].class)));
         customer.setEngagedParty(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getEngagedParty(), EngagedParty[].class)));
 
-//        customer.setAccount(getAccountRefsList(createCustomerReqDto.getCustomer()));
-//        customer.setAgreement(getAgreementRefsList(createCustomerReqDto.getCustomer()));
-//        customer.setCharacteristic(getCharacteristicsList(createCustomerReqDto.getCustomer()));
-//        customer.setPaymentMethod(getPaymentMethodList(createCustomerReqDto.getCustomer()));
-//        customer.setRelatedParty(getRelatedPartiesList(createCustomerReqDto.getCustomer()));
-//        customer.setCreditProfile(getCreditProfileList(createCustomerReqDto.getCustomer()));
-//        customer.setContactMedium(getContactMediumList(createCustomerReqDto.getCustomer()));
-//        customer.setEngagedParty(getEngagedPartyList(createCustomerReqDto.getCustomer()));
-
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
         Customer createdCustomer = customerRepository.save(customer);
