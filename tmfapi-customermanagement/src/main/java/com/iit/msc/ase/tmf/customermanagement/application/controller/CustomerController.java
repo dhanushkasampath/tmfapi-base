@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import com.iit.msc.ase.tmf.commonconfig.application.controller.BaseController;
 import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.CustomerService;
-import com.iit.msc.ase.tmf.customermanagement.domain.boundary.service.TimePeriodService;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
@@ -40,9 +39,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-
-    @Autowired
-    private TimePeriodService timePeriodService;
 
     @Autowired
     private CustomerService customerService;
