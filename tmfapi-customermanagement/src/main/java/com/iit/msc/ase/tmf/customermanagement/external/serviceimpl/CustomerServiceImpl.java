@@ -125,7 +125,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public QueryCustomerByIdRespDto queryById(String id) {
+    public QueryCustomerByIdRespDto queryById(String id, String fields) {
         log("queryById method of Customer started|id:{}", id);
         QueryCustomerByIdRespDto queryCustomerByIdRespDto = new QueryCustomerByIdRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();

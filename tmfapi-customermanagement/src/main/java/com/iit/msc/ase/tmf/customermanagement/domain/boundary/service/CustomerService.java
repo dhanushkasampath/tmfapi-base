@@ -18,7 +18,7 @@ public interface CustomerService extends CommonService {
 
     QueryAllCustomerRespDto queryAll(Map < String, String > filters, String fields, Integer offset, Integer limit) throws CustomerMgtException;
 
-    QueryCustomerByIdRespDto queryById(String id);
+    QueryCustomerByIdRespDto queryById(String id, String fields);
 
     void deleteById(String id);
 

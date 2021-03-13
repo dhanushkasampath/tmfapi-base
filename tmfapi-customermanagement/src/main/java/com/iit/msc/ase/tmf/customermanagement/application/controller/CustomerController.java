@@ -94,7 +94,7 @@ public class CustomerController extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query customer by id:{}", id);
         }
-        QueryCustomerByIdRespDto queryCustomerByIdRespDto = customerService.queryById(id);
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = customerService.queryById(id, fields);
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying customer by id:{}|{}", id, mapObjToString(queryCustomerByIdRespDto));
         }
