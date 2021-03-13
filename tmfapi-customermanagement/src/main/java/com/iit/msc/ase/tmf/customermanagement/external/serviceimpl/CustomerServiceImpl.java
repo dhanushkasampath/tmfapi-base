@@ -75,6 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Value( "${validation.regex.limit}" )
     private String validationRegexLimit;
 
+    @Value( "${customer.href}" )
+    private String customerHref;
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -130,7 +133,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
-        customerRepository.save(customer);
+        Customer createdCustomer = customerRepository.save(customer);
+        createdCustomer.setHref(customerHref.replace(Constants.CUSTOMER_ID_IDENTIFIER, createdCustomer.getId()));
+        customerRepository.save(createdCustomer);
         responseHeaderDto.setResponseCode(String.valueOf(HttpStatus.OK.value()));
         responseHeaderDto.setResponseDesc(Constants.OPERATION_SUCCESSFUL);
         responseHeaderDto.setResponseDescDisplay(Constants.CXM1000);
