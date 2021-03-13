@@ -88,13 +88,11 @@ public class CustomerController extends BaseController {
             @PathVariable( name = "id",
                     required = true )
                     String id,
-            @RequestParam( required = false )
-                    String fields,
             HttpServletRequest request) {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to query customer by id:{}", id);
         }
-        QueryCustomerByIdRespDto queryCustomerByIdRespDto = customerService.queryById(id, fields);
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = customerService.queryById(id);
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying customer by id:{}|{}", id, mapObjToString(queryCustomerByIdRespDto));
         }
