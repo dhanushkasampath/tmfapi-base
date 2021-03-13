@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Dhanushka Sampath
@@ -14,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "agreement_ref")
 public class AgreementRef {
 
     @Id
