@@ -2,6 +2,7 @@ package com.iit.msc.ase.tmf.customermanagement.external.util;
 
 /**
  * This Constants class is used to keep constants of the application
+ *
  * @author Dhanushka Sampath
  * @version 1.0
  * @since 2021.02.22
@@ -12,8 +13,9 @@ public class Constants {
         //This class facilitate constants
     }
 
-    public static final String OPERATION_SUCCESSFUL = "Operation Successful";//Success
-    public static final String CUSTOMER_ID_IDENTIFIER = "<id>";//Success
+    public static final String OPERATION_SUCCESSFUL = "Operation Successful";
+    public static final String CUSTOMER_ID_IDENTIFIER = "<id>";
+    public static final String CUSTOMER_SORT_FIELD = "validFor.startDateTime";
 
     public static final String CXM1000 = "CXM1000";//Success
 

@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -48,6 +49,7 @@ import org.springframework.stereotype.Service;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.limit;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.skip;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -251,25 +253,25 @@ public class CustomerServiceImpl implements CustomerService {
 
         if ( !filters.isEmpty() ) {
             if ( pageNumber.equals(1) ) {
-                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize));//no need to pass skip param if you need the first page
+                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
             } else {
-                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize));
+                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
 
         if ( fields != null ) {
             if ( pageNumber.equals(1) ) {
-                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize));
+                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             } else {
-                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize));
+                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
 
         if ( !filters.isEmpty() && fields != null ) {
             if ( pageNumber.equals(1) ) {
-                aggregation = Aggregation.newAggregation(matchStage, projectStage, limit(pageSize));
+                aggregation = Aggregation.newAggregation(matchStage, projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             } else {
-                aggregation = Aggregation.newAggregation(matchStage, projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize));//, projectStage, skip(pageNumber * pageSize), limit(pageSize)
+                aggregation = Aggregation.newAggregation(matchStage, projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
 
