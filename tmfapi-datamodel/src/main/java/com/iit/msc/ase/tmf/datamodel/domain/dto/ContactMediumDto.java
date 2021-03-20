@@ -18,40 +18,29 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class ContactMediumDto {
 
-    public static final String CHARACTERISTIC_TABLE = "MediumCharacteristic";
-    public static final String VALIDFOR_TABLE = "TimePeriod";
-
-    @JsonIgnore
-    private long primaryId;
-    @JsonIgnore
-    private String parentEntity;
-    @JsonIgnore
-    private String parentId;
-    @JsonIgnore
-    private String immediateParent;
-    @JsonIgnore
-    private String immediateParentId;
     @NotNull
     private String mediumType;
+
     private boolean preferred;
 
-
     private TimePeriodDto validFor;
+
     @Valid
     @NotNull
     private MediumCharacteristicDto characteristic;
 
     @JsonProperty( "@baseType" )
     private String baseType;
+
     @JsonProperty( "@referredType" )
     private String referredType;
+
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
     @Override
     public String toString() {
         return "ContactMedium{" +
-                "primaryId=" + primaryId +
                 ", mediumType='" + mediumType + '\'' +
                 ", preferred=" + preferred +
                 ", validFor=" + validFor +

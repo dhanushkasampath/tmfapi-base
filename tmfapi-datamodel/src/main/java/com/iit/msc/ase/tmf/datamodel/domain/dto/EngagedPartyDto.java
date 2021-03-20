@@ -17,30 +17,26 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class EngagedPartyDto {
 
-    @JsonIgnore
-    private long primaryId;
-    @JsonIgnore
-    private String parentEntity;
-    @JsonIgnore
-    private String parentId;
-    @JsonIgnore
-    private String immediateParent;
-    @JsonIgnore
-    private String immediateParentId;
     @JsonProperty( "@referredType" )
     private String referredType;
+
     private String role;
+
     @JsonProperty( "@baseType" )
     private String baseType;
+
     @JsonProperty( "@type" )
     private String type;
+
     private String name;
+
     @NotNull
     private String id;
+
     private String href;
+
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
-
 
     @Override
     public String toString() {

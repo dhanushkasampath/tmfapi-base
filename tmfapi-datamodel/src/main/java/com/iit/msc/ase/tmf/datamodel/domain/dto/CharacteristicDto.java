@@ -17,27 +17,21 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class CharacteristicDto {
 
-    @JsonIgnore
-    private long primaryId;
-    @JsonIgnore
-    private String parentEntity;
-    @JsonIgnore
-    private String parentId;
-    @JsonIgnore
-    private String immediateParent;
-    @JsonIgnore
-    private String immediateParentId;
-
     @JsonProperty( "@baseType" )
     private String baseType;
+
     @JsonProperty( "@type" )
     private String type;
+
     @NotNull
     private String valueType;
+
     @NotNull
     private String value;
+
     @NotNull
     private String name;
+
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
