@@ -157,9 +157,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto) {
+    public UpdateCustomerRespDto update(String id, UpdateCustomerReqDto updateCustomerReqDto) throws CustomerMgtException {
         log("update method of Customer started");
         Customer customer = findById(id);
+        if ( customer == null ) {
+            logger.error("Customer not found for id:{}", id);
+            throw new CustomerMgtException(String.format("Customer not found for id:%s", id), Constants.CXM2003);
+        }
         customer.setStatus(updateCustomerReqDto.getCustomer().getStatus());
         customer.setType(updateCustomerReqDto.getCustomer().getType());
         customer.setStatusReason(updateCustomerReqDto.getCustomer().getStatusReason());
@@ -245,27 +249,37 @@ public class CustomerServiceImpl implements CustomerService {
                 criteriaList.add(criteria);
             }
             matchStage = new MatchOperation(!criteriaList.isEmpty() ? new Criteria().andOperator(criteriaList.toArray(new Criteria[ criteriaList.size() ])) : new Criteria());
-        }
-        if ( fields != null ) {
-            List < String > requiredFieldList = Stream.of(fields.split(",", -1)).collect(Collectors.toList());
-            projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));//projectStage = Aggregation.project("href", "status");//at lease 1 param should be there
-        }
-
-        if ( !filters.isEmpty() ) {
             if ( pageNumber.equals(1) ) {
                 aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
             } else {
                 aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
-
         if ( fields != null ) {
+            List < String > requiredFieldList = Stream.of(fields.split(",", -1)).collect(Collectors.toList());
+            projectStage = Aggregation.project(requiredFieldList.toArray(new String[ 0 ]));//projectStage = Aggregation.project("href", "status");//at lease 1 param should be there
             if ( pageNumber.equals(1) ) {
                 aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             } else {
                 aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
+
+//        if ( !filters.isEmpty() ) {
+//            if ( pageNumber.equals(1) ) {
+//                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
+//            } else {
+//                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            }
+//        }
+
+//        if ( fields != null ) {
+//            if ( pageNumber.equals(1) ) {
+//                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            } else {
+//                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            }
+//        }
 
         if ( !filters.isEmpty() && fields != null ) {
             if ( pageNumber.equals(1) ) {
