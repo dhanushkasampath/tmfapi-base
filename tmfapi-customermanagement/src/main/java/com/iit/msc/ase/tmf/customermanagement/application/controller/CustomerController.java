@@ -124,7 +124,7 @@ public class CustomerController extends BaseController {
                     String id,
             @Valid
             @RequestBody( required = true )
-                    UpdateCustomerReqDto updateCustomerReqDto, HttpServletRequest request) {
+                    UpdateCustomerReqDto updateCustomerReqDto, HttpServletRequest request) throws CustomerMgtException {
         if ( logger.isInfoEnabled() ) {
             logger.info("Received request to update customer|id:{}|updateCustomerReqDto:{}", id, mapObjToString(updateCustomerReqDto));
         }
