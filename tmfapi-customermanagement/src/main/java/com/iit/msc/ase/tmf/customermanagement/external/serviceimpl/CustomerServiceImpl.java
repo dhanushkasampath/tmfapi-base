@@ -252,7 +252,8 @@ public class CustomerServiceImpl implements CustomerService {
             if ( pageNumber.equals(1) ) {
                 aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
             } else {
-                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC,
+                        Constants.CUSTOMER_SORT_FIELD));
             }
         }
         if ( fields != null ) {
@@ -261,31 +262,17 @@ public class CustomerServiceImpl implements CustomerService {
             if ( pageNumber.equals(1) ) {
                 aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             } else {
-                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC,
+                        Constants.CUSTOMER_SORT_FIELD));
             }
         }
-
-//        if ( !filters.isEmpty() ) {
-//            if ( pageNumber.equals(1) ) {
-//                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
-//            } else {
-//                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
-//            }
-//        }
-
-//        if ( fields != null ) {
-//            if ( pageNumber.equals(1) ) {
-//                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
-//            } else {
-//                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
-//            }
-//        }
 
         if ( !filters.isEmpty() && fields != null ) {
             if ( pageNumber.equals(1) ) {
                 aggregation = Aggregation.newAggregation(matchStage, projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             } else {
-                aggregation = Aggregation.newAggregation(matchStage, projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+                aggregation = Aggregation.newAggregation(matchStage, projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize),
+                        sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
             }
         }
 
@@ -306,3 +293,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 }
+
+
+//        if ( !filters.isEmpty() ) {
+//            if ( pageNumber.equals(1) ) {
+//                aggregation = Aggregation.newAggregation(matchStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));//no need to pass skip param if you need the first page
+//            } else {
+//                aggregation = Aggregation.newAggregation(matchStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            }
+//        }
+
+//        if ( fields != null ) {
+//            if ( pageNumber.equals(1) ) {
+//                aggregation = Aggregation.newAggregation(projectStage, limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            } else {
+//                aggregation = Aggregation.newAggregation(projectStage, skip((pageNumber - 1) * pageSize), limit(pageSize), sort(Sort.Direction.DESC, Constants.CUSTOMER_SORT_FIELD));
+//            }
+//        }

@@ -56,7 +56,7 @@ public class CustomerController extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after creating a customer|createCustomerRespDto:{}", mapObjToString(createCustomerRespDto));
         }
-        return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(createCustomerRespDto.getResponseHeader().getResponseCode())));
+        return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.parseInt(createCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
     @GetMapping( value = "",
@@ -79,7 +79,7 @@ public class CustomerController extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying all customers|:{}", mapObjToString(queryAllCustomerRespDto));
         }
-        return new ResponseEntity <>(queryAllCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(queryAllCustomerRespDto.getResponseHeader().getResponseCode())));
+        return new ResponseEntity <>(queryAllCustomerRespDto, HttpStatus.valueOf(Integer.parseInt(queryAllCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
     @GetMapping( value = "/{id}",
@@ -96,7 +96,7 @@ public class CustomerController extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after querying customer by id:{}|{}", id, mapObjToString(queryCustomerByIdRespDto));
         }
-        return new ResponseEntity <>(queryCustomerByIdRespDto, HttpStatus.valueOf(Integer.valueOf(queryCustomerByIdRespDto.getResponseHeader().getResponseCode())));
+        return new ResponseEntity <>(queryCustomerByIdRespDto, HttpStatus.valueOf(Integer.parseInt(queryCustomerByIdRespDto.getResponseHeader().getResponseCode())));
     }
 
     @DeleteMapping( value = "/{id}",
@@ -132,7 +132,7 @@ public class CustomerController extends BaseController {
         if ( logger.isInfoEnabled() ) {
             logger.info("Return response after updating a customer|updateCustomerRespDto:{}", mapObjToString(updateCustomerRespDto));
         }
-        return new ResponseEntity <>(updateCustomerRespDto, HttpStatus.valueOf(Integer.valueOf(updateCustomerRespDto.getResponseHeader().getResponseCode())));
+        return new ResponseEntity <>(updateCustomerRespDto, HttpStatus.valueOf(Integer.parseInt(updateCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
 }

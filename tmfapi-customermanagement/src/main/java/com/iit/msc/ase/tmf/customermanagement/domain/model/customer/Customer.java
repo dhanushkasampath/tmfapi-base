@@ -45,5 +45,4 @@ public class Customer {
     private List < PaymentRef > paymentMethod;
 
     private List < AccountRef > account;
-
 }
