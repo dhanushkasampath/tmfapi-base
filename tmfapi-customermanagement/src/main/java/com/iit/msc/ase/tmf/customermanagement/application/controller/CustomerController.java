@@ -43,6 +43,18 @@ public class CustomerController extends BaseController {
     @Autowired
     private CustomerService customerService;
 
+    @GetMapping( path = "/test-hello-app",
+            produces = MediaType.APPLICATION_JSON_VALUE )
+    public ResponseEntity test(HttpServletRequest request) {
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Received request to test the hello app");
+        }
+        if ( logger.isInfoEnabled() ) {
+            logger.info("Return response after testing the hello app");
+        }
+        return new ResponseEntity <>("hello-app is working!!", HttpStatus.OK);
+    }
+
     @PostMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity createCustomer(
