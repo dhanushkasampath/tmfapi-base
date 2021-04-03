@@ -1,6 +1,5 @@
 package com.iit.msc.ase.tmf.datamodel.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -14,17 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class MediumCharacteristicDto {
-
-    @JsonIgnore
-    private long primaryId;
-    @JsonIgnore
-    private String parentEntity;
-    @JsonIgnore
-    private String parentId;
-    @JsonIgnore
-    private String immediateParent;
-    @JsonIgnore
-    private String immediateParentId;
 
     private String country;
     private String city;
@@ -47,11 +35,6 @@ public class MediumCharacteristicDto {
     @Override
     public String toString() {
         return "MediumCharacteristic{" +
-                "primaryId=" + primaryId +
-                ", parentEntity='" + parentEntity + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", immediateParent='" + immediateParent + '\'' +
-                ", immediateParentId='" + immediateParentId + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", contactType='" + contactType + '\'' +

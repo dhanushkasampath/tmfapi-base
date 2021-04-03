@@ -17,43 +17,33 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class RelatedPartyDto {
 
-    @JsonIgnore
-    private long primaryId;
-    @JsonIgnore
-    private String parentEntity;
-    @JsonIgnore
-    private String parentId;
-    @JsonIgnore
-    private String immediateParent;
-    @JsonIgnore
-    private String immediateParentId;
-
     @NotNull
     private String name;
+
     @NotNull
     private String id;
+
     @NotNull
     private String href;
+
     @NotNull
     private String role;
 
     @JsonProperty( "@referredType" )
     private String referredType;
+
     @JsonProperty( "@baseType" )
     private String baseType;
+
     @JsonProperty( "@type" )
     private String type;
+
     @JsonProperty( "@schemaLocation" )
     private String schemaLocation;
 
     @Override
     public String toString() {
         return "RelatedParty{" +
-                "primaryId=" + primaryId +
-                ", parentEntity='" + parentEntity + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", immediateParent='" + immediateParent + '\'' +
-                ", immediateParentId='" + immediateParentId + '\'' +
                 ", referredType='" + referredType + '\'' +
                 ", role='" + role + '\'' +
                 ", baseType='" + baseType + '\'' +

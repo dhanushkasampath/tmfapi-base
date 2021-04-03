@@ -9,15 +9,15 @@ import lombok.Setter;
 /**
  * @author Dhanushka Sampath
  * @version 1.0
- * @since 2021.02.22
+ * @since 2021.03.07
  */
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class QueryAllCustomerRespDto {
+public class UpdateCustomerRespDto {
 
     private ResponseHeaderDto responseHeader;
-    private Object responseData;
+
 }
 
