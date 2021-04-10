@@ -245,8 +245,10 @@ public class CustomerServiceImpl implements CustomerService {
             }
             List < Criteria > criteriaList = new ArrayList <>();
             for ( Map.Entry < String, String > entry : filters.entrySet() ) {
-                Criteria criteria = Criteria.where(entry.getKey()).in(entry.getValue());
-                criteriaList.add(criteria);
+                if(!entry.getValue().isEmpty()){
+                    Criteria criteria = Criteria.where(entry.getKey()).in(entry.getValue());
+                    criteriaList.add(criteria);
+                }
             }
             matchStage = new MatchOperation(!criteriaList.isEmpty() ? new Criteria().andOperator(criteriaList.toArray(new Criteria[ criteriaList.size() ])) : new Criteria());
             if ( pageNumber.equals(1) ) {
