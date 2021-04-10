@@ -5,8 +5,7 @@
 	<parent>
 		<groupId>com.iit.msc.ase.tmf</groupId>
 		<artifactId>tmfapi-base</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-<!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>common-config</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -50,8 +49,8 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
