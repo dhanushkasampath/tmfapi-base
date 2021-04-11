@@ -2,13 +2,17 @@ package com.iit.msc.ase.tmf.customermanagement.services;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryAllCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
@@ -27,11 +31,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -48,6 +56,9 @@ public class CustomerServiceTest {
     @Mock
     private CustomerRepository mockCustomerRepository;
 
+    @Mock
+    private MongoTemplate mockMongoTemplate;
+
     private CreateCustomerReqDto createCustomerReqDto;
 
     private UpdateCustomerReqDto updateCustomerReqDto;
@@ -61,17 +72,19 @@ public class CustomerServiceTest {
         updateCustomerReqDto = getUpdateCustomerReqDto();
         customer = getCustomer();
         ReflectionTestUtils.setField(mockCustomerService, "customerHref", "http://host:port/tmf-api/customerManagement/v4/customer/<id>");
+        ReflectionTestUtils.setField(mockCustomerService, "validationRegexOffset", "^[0-9]*$");
+        ReflectionTestUtils.setField(mockCustomerService, "validationRegexLimit", "^[0-9]*$");
     }
 
     @Test
-    public void testCreate()  {
+    public void testCreate() {
         when(mockCustomerRepository.save(any(Customer.class))).thenReturn(customer);
         CreateCustomerRespDto createCustomerRespDto = mockCustomerService.create(createCustomerReqDto);
         assertEquals(String.valueOf(HttpStatus.OK.value()), createCustomerRespDto.getResponseHeader().getResponseCode());
     }
 
     @Test
-    public void testQueryById()  {
+    public void testQueryById() {
         when(mockCustomerRepository.findById(any(String.class))).thenReturn(Optional.of(customer));
         QueryCustomerByIdRespDto queryCustomerByIdRespDto = mockCustomerService.queryById("6071da0b46e0fb0007f09f88");
         assertEquals(String.valueOf(HttpStatus.OK.value()), queryCustomerByIdRespDto.getResponseHeader().getResponseCode());
@@ -87,15 +100,28 @@ public class CustomerServiceTest {
 
     @Test
     public void testQueryAll() throws CustomerMgtException {
-        when(mockCustomerRepository.save(any(Customer.class))).thenReturn(customer);
-        UpdateCustomerRespDto updateCustomerRespDto = mockCustomerService.update("6071da0b46e0fb0007f09f88", updateCustomerReqDto);
-        assertEquals(String.valueOf(HttpStatus.OK.value()), updateCustomerRespDto.getResponseHeader().getResponseCode());
+        AggregationResults resultMock = mock(AggregationResults.class);
+        when(resultMock.getMappedResults()).thenReturn(Collections.singletonList(customer));
+        when(mockMongoTemplate.aggregate(any(Aggregation.class), any(String.class), any())).thenReturn(resultMock);
+        QueryAllCustomerRespDto queryAllCustomerRespDto = mockCustomerService.queryAll(getFilters(), "id,href,status,statusReason,type,name,validFor", 1, 10);
+        assertEquals(String.valueOf(HttpStatus.OK.value()), queryAllCustomerRespDto.getResponseHeader().getResponseCode());
+    }
+
+    private Map < String, String > getFilters() {
+        Map < String, String > filtersMap = new HashMap <>();
+        filtersMap.put("name", "Dhanushka Sampath");
+        filtersMap.put("contactMedium.characteristic.city", "Colombo");
+        filtersMap.put("engagedParty.referredType", "Organization");
+        filtersMap.put("status", "Approved");
+        filtersMap.put("offset", "1");
+        filtersMap.put("limit", "10");
+        return filtersMap;
     }
 
     /**
      * @return
      */
-    private RequestHeaderDto getRequestHeaderDto(){
+    private RequestHeaderDto getRequestHeaderDto() {
         RequestHeaderDto adminRequestHeader = new RequestHeaderDto();
         adminRequestHeader.setRequestId("qwer-123-455fdv-56gfdf-65jd");
         adminRequestHeader.setChannel("web");
@@ -116,7 +142,7 @@ public class CustomerServiceTest {
         timePeriodDto.setStartDateTime("2021-06-12T00:00Z");
         timePeriodDto.setEndDateTime("2022-06-12T00:00Z");
         customerDto.setValidFor(timePeriodDto);
-        List <AccountRefDto> accountRefDtoList = new ArrayList<>();
+        List < AccountRefDto > accountRefDtoList = new ArrayList <>();
         AccountRefDto accountRefDto = new AccountRefDto();
         accountRefDto.setReferredType("BillingAccount");
         accountRefDto.setDescription("This is the billing account of customer");
@@ -144,7 +170,7 @@ public class CustomerServiceTest {
         timePeriodDto.setStartDateTime("2021-06-12T00:00Z");
         timePeriodDto.setEndDateTime("2022-06-12T00:00Z");
         customerDto.setValidFor(timePeriodDto);
-        List <AccountRefDto> accountRefDtoList = new ArrayList<>();
+        List < AccountRefDto > accountRefDtoList = new ArrayList <>();
         AccountRefDto accountRefDto = new AccountRefDto();
         accountRefDto.setReferredType("BillingAccount");
         accountRefDto.setDescription("This is the billing account of customer");
@@ -168,7 +194,7 @@ public class CustomerServiceTest {
         timePeriod.setStartDateTime("2021-06-12T00:00Z");
         timePeriod.setEndDateTime("2022-06-12T00:00Z");
         createdCustomer.setValidFor(timePeriod);
-        List < AccountRef > accountRefList = new ArrayList<>();
+        List < AccountRef > accountRefList = new ArrayList <>();
         AccountRef accountRef = new AccountRef();
         accountRef.setReferredType("BillingAccount");
         accountRef.setDescription("This is the billing account of customer");
