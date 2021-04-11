@@ -118,9 +118,6 @@ public class CustomerServiceTest {
         return filtersMap;
     }
 
-    /**
-     * @return
-     */
     private RequestHeaderDto getRequestHeaderDto() {
         RequestHeaderDto adminRequestHeader = new RequestHeaderDto();
         adminRequestHeader.setRequestId("qwer-123-455fdv-56gfdf-65jd");
