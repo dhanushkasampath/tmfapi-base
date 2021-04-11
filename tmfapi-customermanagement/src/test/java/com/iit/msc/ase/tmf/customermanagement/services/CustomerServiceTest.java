@@ -3,10 +3,15 @@ package com.iit.msc.ase.tmf.customermanagement.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.iit.msc.ase.tmf.commonconfig.application.exception.type.CustomerMgtException;
 import com.iit.msc.ase.tmf.customermanagement.domain.boundary.repository.CustomerRepository;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerReqDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.CreateCustomerRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.QueryCustomerByIdRespDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerReqDto;
+import com.iit.msc.ase.tmf.customermanagement.domain.dto.feature.UpdateCustomerRespDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.dto.headers.RequestHeaderDto;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.AccountRef;
 import com.iit.msc.ase.tmf.customermanagement.domain.model.customer.Customer;
@@ -45,12 +50,15 @@ public class CustomerServiceTest {
 
     private CreateCustomerReqDto createCustomerReqDto;
 
+    private UpdateCustomerReqDto updateCustomerReqDto;
+
     private Customer customer;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         createCustomerReqDto = getCreateCustomerReqDto();
+        updateCustomerReqDto = getUpdateCustomerReqDto();
         customer = getCustomer();
         ReflectionTestUtils.setField(mockCustomerService, "customerHref", "http://host:port/tmf-api/customerManagement/v4/customer/<id>");
     }
@@ -62,6 +70,28 @@ public class CustomerServiceTest {
         assertEquals(String.valueOf(HttpStatus.OK.value()), createCustomerRespDto.getResponseHeader().getResponseCode());
     }
 
+    @Test
+    public void testQueryById()  {
+        when(mockCustomerRepository.findById(any(String.class))).thenReturn(Optional.of(customer));
+        QueryCustomerByIdRespDto queryCustomerByIdRespDto = mockCustomerService.queryById("6071da0b46e0fb0007f09f88");
+        assertEquals(String.valueOf(HttpStatus.OK.value()), queryCustomerByIdRespDto.getResponseHeader().getResponseCode());
+    }
+
+    @Test
+    public void testUpdate() throws CustomerMgtException {
+        when(mockCustomerRepository.findById(any(String.class))).thenReturn(Optional.of(customer));
+        when(mockCustomerRepository.save(any(Customer.class))).thenReturn(customer);
+        UpdateCustomerRespDto updateCustomerRespDto = mockCustomerService.update("6071da0b46e0fb0007f09f88", updateCustomerReqDto);
+        assertEquals(String.valueOf(HttpStatus.OK.value()), updateCustomerRespDto.getResponseHeader().getResponseCode());
+    }
+
+    @Test
+    public void testQueryAll() throws CustomerMgtException {
+        when(mockCustomerRepository.save(any(Customer.class))).thenReturn(customer);
+        UpdateCustomerRespDto updateCustomerRespDto = mockCustomerService.update("6071da0b46e0fb0007f09f88", updateCustomerReqDto);
+        assertEquals(String.valueOf(HttpStatus.OK.value()), updateCustomerRespDto.getResponseHeader().getResponseCode());
+    }
+
     /**
      * @return
      */
@@ -71,6 +101,31 @@ public class CustomerServiceTest {
         adminRequestHeader.setChannel("web");
         adminRequestHeader.setTimestamp(LocalDateTime.now().toString());
         return adminRequestHeader;
+    }
+
+    private UpdateCustomerReqDto getUpdateCustomerReqDto() {
+        UpdateCustomerReqDto updateCustomerReqDto = new UpdateCustomerReqDto();
+        updateCustomerReqDto.setRequestHeader(getRequestHeaderDto());
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setType("Customer");
+        customerDto.setHref("https://host:port/tmf-api/customerManagement/v4/customer/<id>");
+        customerDto.setName("Dhanushka Sampath Updated");
+        customerDto.setStatus("Approved");
+        customerDto.setStatusReason("Account details checked");
+        TimePeriodDto timePeriodDto = new TimePeriodDto();
+        timePeriodDto.setStartDateTime("2021-06-12T00:00Z");
+        timePeriodDto.setEndDateTime("2022-06-12T00:00Z");
+        customerDto.setValidFor(timePeriodDto);
+        List <AccountRefDto> accountRefDtoList = new ArrayList<>();
+        AccountRefDto accountRefDto = new AccountRefDto();
+        accountRefDto.setReferredType("BillingAccount");
+        accountRefDto.setDescription("This is the billing account of customer");
+        accountRefDto.setHref("https://host:port/tmf-api/accountManagement/v4/account/8251");
+        accountRefDto.setName("Billing");
+        accountRefDtoList.add(accountRefDto);
+        customerDto.setAccount(accountRefDtoList);
+        updateCustomerReqDto.setCustomer(customerDto);
+        return updateCustomerReqDto;
     }
 
     /**
