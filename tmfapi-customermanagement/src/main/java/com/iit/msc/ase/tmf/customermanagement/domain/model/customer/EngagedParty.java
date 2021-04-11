@@ -25,7 +25,6 @@ public class EngagedParty {
     @Indexed
     private String role;
 
-    @Indexed
     private String baseType;
 
     @Indexed

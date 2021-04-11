@@ -35,7 +35,6 @@ public class Customer {
     @Indexed
     private String statusReason;
 
-    @Indexed
     private String baseType;
 
     @Indexed

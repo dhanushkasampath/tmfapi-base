@@ -56,6 +56,5 @@ public class MediumCharacteristic {
     @Indexed
     private String type;
 
-    @Indexed
     private String baseType;
 }

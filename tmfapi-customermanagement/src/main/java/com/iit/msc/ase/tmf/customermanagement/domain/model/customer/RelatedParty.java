@@ -31,7 +31,6 @@ public class RelatedParty {
     @Indexed
     private String referredType;
 
-    @Indexed
     private String baseType;
 
     @Indexed

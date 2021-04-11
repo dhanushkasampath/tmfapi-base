@@ -22,7 +22,6 @@ public class PaymentRef {
     @Indexed
     private String referredType;
 
-    @Indexed
     private String baseType;
 
     @Indexed
