@@ -74,14 +74,14 @@ public class CustomerServiceImpl implements CustomerService {
         log("create method of Customer started");
         Customer customer = getModelMapper().map(createCustomerReqDto.getCustomer(), Customer.class);//mapping basic parameters
 
-        customer.setAccount(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getAccount(), AccountRef[].class)));
-        customer.setAgreement(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getAgreement(), AgreementRef[].class)));
-        customer.setCharacteristic(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getCharacteristic(), Characteristic[].class)));
-        customer.setPaymentMethod(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getPaymentMethod(), PaymentRef[].class)));
-        customer.setRelatedParty(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getRelatedParty(), RelatedParty[].class)));
-        customer.setCreditProfile(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getCreditProfile(), CreditProfile[].class)));
-        customer.setContactMedium(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getContactMedium(), ContactMedium[].class)));
-        customer.setEngagedParty(Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getEngagedParty(), EngagedParty[].class)));
+        customer.setAccount(((createCustomerReqDto.getCustomer().getAccount() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getAccount(), AccountRef[].class))));
+        customer.setAgreement(((createCustomerReqDto.getCustomer().getAgreement() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getAgreement(), AgreementRef[].class))));
+        customer.setCharacteristic(((createCustomerReqDto.getCustomer().getCharacteristic() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getCharacteristic(), Characteristic[].class))));
+        customer.setPaymentMethod(((createCustomerReqDto.getCustomer().getPaymentMethod() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getPaymentMethod(), PaymentRef[].class))));
+        customer.setRelatedParty(((createCustomerReqDto.getCustomer().getRelatedParty() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getRelatedParty(), RelatedParty[].class))));
+        customer.setCreditProfile(((createCustomerReqDto.getCustomer().getCreditProfile() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getCreditProfile(), CreditProfile[].class))));
+        customer.setContactMedium(((createCustomerReqDto.getCustomer().getContactMedium() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getContactMedium(), ContactMedium[].class))));
+        customer.setEngagedParty(((createCustomerReqDto.getCustomer().getEngagedParty() == null) ? new ArrayList<>() : Arrays.asList(getModelMapper().map(createCustomerReqDto.getCustomer().getEngagedParty(), EngagedParty[].class))));
 
         CreateCustomerRespDto createCustomerRespDto = new CreateCustomerRespDto();
         ResponseHeaderDto responseHeaderDto = new ResponseHeaderDto();
