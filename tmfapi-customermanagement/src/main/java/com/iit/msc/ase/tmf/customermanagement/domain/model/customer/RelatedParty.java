@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  * @author Dhanushka Sampath
@@ -17,11 +18,25 @@ public class RelatedParty {
 
     @Id
     private String id;
+
+    @Indexed
     private String name;
+
+    @Indexed
     private String href;
+
+    @Indexed
     private String role;
+
+    @Indexed
     private String referredType;
+
+    @Indexed
     private String baseType;
+
+    @Indexed
     private String type;
+
+    @Indexed
     private String schemaLocation;
 }

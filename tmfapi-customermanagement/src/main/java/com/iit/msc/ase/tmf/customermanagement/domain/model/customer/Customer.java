@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -21,12 +22,26 @@ public class Customer {
 
     @Id
     private String id;
+
+    @Indexed
     private String href;
+
+    @Indexed
     private String status;
+
+    @Indexed
     private String type;
+
+    @Indexed
     private String statusReason;
+
+    @Indexed
     private String baseType;
+
+    @Indexed
     private String name;
+
+    @Indexed
     private String schemaLocation;
     private TimePeriod validFor;
 

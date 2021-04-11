@@ -3,6 +3,7 @@ package com.iit.msc.ase.tmf.customermanagement.domain.model.customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  * @author Dhanushka Sampath
@@ -15,9 +16,19 @@ import lombok.NoArgsConstructor;
 public class Characteristic {
 
     private String baseType;
+
+    @Indexed
     private String type;
+
+    @Indexed
     private String valueType;
+
+    @Indexed
     private String value;
+
+    @Indexed
     private String name;
+
+    @Indexed
     private String schemaLocation;
 }
