@@ -18,7 +18,6 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class ContactMediumDto {
 
-    @NotNull
     private String mediumType;
 
     private boolean preferred;
@@ -26,7 +25,6 @@ public class ContactMediumDto {
     private TimePeriodDto validFor;
 
     @Valid
-    @NotNull
     private MediumCharacteristicDto characteristic;
 
     @JsonProperty( "@baseType" )

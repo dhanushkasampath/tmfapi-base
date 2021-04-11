@@ -30,7 +30,6 @@ public class EngagedPartyDto {
 
     private String name;
 
-    @NotNull
     private String id;
 
     private String href;

@@ -17,16 +17,12 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class RelatedPartyDto {
 
-    @NotNull
     private String name;
 
-    @NotNull
     private String id;
 
-    @NotNull
     private String href;
 
-    @NotNull
     private String role;
 
     @JsonProperty( "@referredType" )

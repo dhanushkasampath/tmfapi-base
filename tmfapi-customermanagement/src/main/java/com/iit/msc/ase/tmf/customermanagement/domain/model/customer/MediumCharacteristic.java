@@ -15,13 +15,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class MediumCharacteristic {
 
-    @Id
-    private String id;//added by me
-    private long primaryId;
-    private String parentEntity;
-    private String parentId;
-    private String immediateParent;
-    private String immediateParentId;
+    private String href;
     private String country;
     private String city;
     private String contactType;

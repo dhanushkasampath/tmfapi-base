@@ -21,7 +21,6 @@ public class CustomerDto {
 
     private String id;
 
-    @NotNull
     private String href;
 
     @JsonProperty( "@type" )
@@ -34,7 +33,6 @@ public class CustomerDto {
     @JsonProperty( "@baseType" )
     private String baseType;
 
-    @NotNull
     private String name;
 
     @JsonProperty( "@schemaLocation" )
@@ -60,7 +58,6 @@ public class CustomerDto {
     @Valid
     private List < AccountRefDto > account;
 
-    @NotNull
     private List < EngagedPartyDto > engagedParty;
 
 }

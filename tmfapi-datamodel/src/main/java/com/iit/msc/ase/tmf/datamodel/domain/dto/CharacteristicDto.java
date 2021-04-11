@@ -23,13 +23,10 @@ public class CharacteristicDto {
     @JsonProperty( "@type" )
     private String type;
 
-    @NotNull
     private String valueType;
 
-    @NotNull
     private String value;
 
-    @NotNull
     private String name;
 
     @JsonProperty( "@schemaLocation" )

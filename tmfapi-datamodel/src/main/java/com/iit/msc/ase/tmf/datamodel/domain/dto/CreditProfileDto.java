@@ -17,7 +17,6 @@ import lombok.Setter;
 @JsonInclude( JsonInclude.Include.NON_EMPTY )
 public class CreditProfileDto {
 
-    @NotNull
     private String creditProfileDate;
 
     private int creditScore;
@@ -25,7 +24,6 @@ public class CreditProfileDto {
     @JsonProperty( "@baseType" )
     private String baseType;
 
-    @NotNull
     private TimePeriodDto validFor;
 
     @JsonProperty( "@type" )

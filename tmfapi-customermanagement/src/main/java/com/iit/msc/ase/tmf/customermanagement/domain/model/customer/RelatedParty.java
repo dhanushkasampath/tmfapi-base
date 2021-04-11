@@ -17,11 +17,6 @@ public class RelatedParty {
 
     @Id
     private String id;
-    private long primaryId;
-    private String parentEntity;
-    private String parentId;
-    private String immediateParent;
-    private String immediateParentId;
     private String name;
     private String href;
     private String role;

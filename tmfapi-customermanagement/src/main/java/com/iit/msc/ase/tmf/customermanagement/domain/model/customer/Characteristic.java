@@ -14,11 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Characteristic {
 
-    private long primaryId;
-    private String parentEntity;
-    private String parentId;
-    private String immediateParent;
-    private String immediateParentId;
     private String baseType;
     private String type;
     private String valueType;

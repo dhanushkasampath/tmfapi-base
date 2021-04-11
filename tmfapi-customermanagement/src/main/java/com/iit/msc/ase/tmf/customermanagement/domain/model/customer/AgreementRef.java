@@ -17,11 +17,6 @@ public class AgreementRef {
 
     @Id
     private String id;
-    private long primaryId;
-    private String parentEntity;
-    private String parentId;
-    private String immediateParent;
-    private String immediateParentId;
     private String referredType;
     private String baseType;
     private String type;

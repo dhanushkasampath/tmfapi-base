@@ -14,12 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreditProfile {
 
-    private String id;
-    private long primaryId;
-    private String parentEntity;
-    private String parentId;
-    private String immediateParent;
-    private String immediateParentId;
     private String creditProfileDate;
     private int creditScore;
     private String baseType;

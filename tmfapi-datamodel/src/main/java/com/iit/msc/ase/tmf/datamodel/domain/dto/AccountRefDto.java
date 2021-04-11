@@ -25,12 +25,10 @@ public class AccountRefDto {
     @JsonProperty( "@type" )
     private String type;
 
-    @NotNull
     private String name;
 
     private String description;
 
-    @NotNull
     private String id;
 
     private String href;

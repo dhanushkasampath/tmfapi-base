@@ -28,7 +28,6 @@ public class AgreementRefDto {
 
     private String name;
 
-    @NotNull
     private String id;
 
     private String href;
