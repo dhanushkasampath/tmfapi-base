@@ -197,7 +197,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findById(String id) {
-        log("findByReferredType method of EngagedParty started");
+        log("findById method started|id:{}", id);
         Optional < Customer > customerOptional = customerRepository.findById(id);
         return customerOptional.orElse(null);
     }

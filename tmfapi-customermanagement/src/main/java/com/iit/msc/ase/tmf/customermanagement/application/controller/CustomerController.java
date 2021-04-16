@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class CustomerController extends BaseController {
     @Autowired
     private CustomerService customerService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping( path = "/test-hello-app",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity test(HttpServletRequest request) {
@@ -55,6 +57,7 @@ public class CustomerController extends BaseController {
         return new ResponseEntity <>("hello-app is working!!", HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity createCustomer(
@@ -71,6 +74,7 @@ public class CustomerController extends BaseController {
         return new ResponseEntity <>(createCustomerRespDto, HttpStatus.valueOf(Integer.parseInt(createCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping( value = "",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity queryAllCustomers(
@@ -94,6 +98,7 @@ public class CustomerController extends BaseController {
         return new ResponseEntity <>(queryAllCustomerRespDto, HttpStatus.valueOf(Integer.parseInt(queryAllCustomerRespDto.getResponseHeader().getResponseCode())));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity queryCustomerById(
@@ -111,6 +116,7 @@ public class CustomerController extends BaseController {
         return new ResponseEntity <>(queryCustomerByIdRespDto, HttpStatus.valueOf(Integer.parseInt(queryCustomerByIdRespDto.getResponseHeader().getResponseCode())));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity deleteCustomerById(
@@ -128,6 +134,7 @@ public class CustomerController extends BaseController {
         return new ResponseEntity <>(null, HttpStatus.NO_CONTENT);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping( value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity updateCustomer(
